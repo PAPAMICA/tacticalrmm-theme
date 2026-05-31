@@ -10,11 +10,11 @@ TRMM_VENV="${TRMM_VENV:-}"
 RESTART_SERVICES="${RESTART_SERVICES:-true}"
 
 log() {
-  echo "[dracula-backend] $*"
+  echo "[trmm-theme-backend] $*"
 }
 
 die() {
-  echo "[dracula-backend] ERROR: $*" >&2
+  echo "[trmm-theme-backend] ERROR: $*" >&2
   exit 1
 }
 
@@ -38,46 +38,46 @@ detect_python() {
     fi
   done
 
-  die "Python Django introuvable. Définissez TRMM_VENV (ex: /rmm/api/env) ou activez le venv TacticalRMM."
+  die "Django Python not found. Set TRMM_VENV (e.g. /rmm/api/env) or activate the TacticalRMM virtualenv."
 }
 
 main() {
-  [[ -d "${TRMM_API_DIR}" ]] || die "Répertoire API introuvable: ${TRMM_API_DIR}"
+  [[ -d "${TRMM_API_DIR}" ]] || die "API directory not found: ${TRMM_API_DIR}"
 
   local patch
   for patch in "${THEME_DIR}"/patches-backend/*.patch; do
     [[ -f "${patch}" ]] || continue
-    log "Application de $(basename "${patch}")"
+    log "Applying $(basename "${patch}")"
     git -C "${TRMM_API_DIR}" apply --check "${patch}" 2>/dev/null || {
-      log "  (déjà appliqué ou conflit — tentative apply)"
+      log "  (already applied or conflict — retrying apply)"
     }
-    git -C "${TRMM_API_DIR}" apply "${patch}" 2>/dev/null || log "  → ignoré (probablement déjà appliqué)"
+    git -C "${TRMM_API_DIR}" apply "${patch}" 2>/dev/null || log "  → skipped (likely already applied)"
   done
 
   local migration_src="${THEME_DIR}/patches-backend/accounts/migrations/0041_user_ui_theme.py"
   local migration_dst="${TRMM_API_DIR}/accounts/migrations/0041_user_ui_theme.py"
   if [[ -f "${migration_src}" && ! -f "${migration_dst}" ]]; then
     cp "${migration_src}" "${migration_dst}"
-    log "Migration 0041_user_ui_theme.py installée"
+    log "Migration 0041_user_ui_theme.py installed"
   elif [[ -f "${migration_dst}" ]]; then
-    log "Migration 0041_user_ui_theme.py déjà présente"
+    log "Migration 0041_user_ui_theme.py already present"
   fi
 
   local python_bin
   python_bin="$(detect_python)"
-  log "Python Django: ${python_bin}"
+  log "Django Python: ${python_bin}"
 
-  log "Exécution de la migration Django"
+  log "Running Django migration"
   (cd "${TRMM_API_DIR}" && "${python_bin}" manage.py migrate accounts --noinput)
 
   if [[ "${RESTART_SERVICES}" == "true" ]] && command -v systemctl >/dev/null 2>&1; then
-    log "Redémarrage des services TacticalRMM"
+    log "Restarting TacticalRMM services"
     systemctl restart rmm.service rmm-daphne.service rmmcelery.service rmmcelerybeat.service 2>/dev/null || \
       systemctl restart rmm rmm-daphne rmmcelery rmmcelerybeat 2>/dev/null || \
-      log "Redémarrage manuel requis: systemctl restart rmm rmm-daphne rmmcelery rmmcelerybeat"
+      log "Manual restart required: systemctl restart rmm rmm-daphne rmmcelery rmmcelerybeat"
   fi
 
-  log "Patches backend appliqués — champ ui_theme disponible"
+  log "Backend patches applied — ui_theme field is available"
 }
 
 main "$@"

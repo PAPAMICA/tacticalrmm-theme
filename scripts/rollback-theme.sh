@@ -15,21 +15,21 @@ usage() {
   cat <<EOF
 Usage: $(basename "$0") [OPTIONS]
 
-Restaure le frontend TacticalRMM depuis une sauvegarde dist.bak.* créée par apply-theme.sh.
+Restore the TacticalRMM frontend from a dist.bak.* backup created by apply-theme.sh.
 
 Options:
-  --list              Lister les sauvegardes disponibles
-  --backup PATH       Restaurer une sauvegarde précise
-  --latest            Restaurer la dernière sauvegarde (défaut)
-  -h, --help          Afficher cette aide
+  --list              List available backups
+  --backup PATH       Restore a specific backup
+  --latest            Restore the latest backup (default)
+  -h, --help          Show this help
 
-Variables d'environnement:
-  TRMM_DIST_PATH      Chemin du frontend (défaut: /var/www/rmm/dist)
-  BACKUP_PATH         Chemin de la sauvegarde à restaurer
-  LIST_ONLY=true      Équivalent de --list
-  SKIP_NGINX_RELOAD   Ne pas recharger nginx
+Environment variables:
+  TRMM_DIST_PATH      Frontend path (default: /var/www/rmm/dist)
+  BACKUP_PATH         Backup path to restore
+  LIST_ONLY=true      Same as --list
+  SKIP_NGINX_RELOAD   Do not reload nginx
 
-Exemples:
+Examples:
   sudo ./scripts/rollback-theme.sh
   sudo ./scripts/rollback-theme.sh --list
   sudo BACKUP_PATH=/var/www/rmm/dist.bak.1717180800 ./scripts/rollback-theme.sh
@@ -37,11 +37,11 @@ EOF
 }
 
 log() {
-  echo "[dracula-rollback] $*"
+  echo "[trmm-theme-rollback] $*"
 }
 
 die() {
-  echo "[dracula-rollback] ERROR: $*" >&2
+  echo "[trmm-theme-rollback] ERROR: $*" >&2
   exit 1
 }
 
@@ -50,19 +50,19 @@ list_backups() {
   parent="$(dirname "${TRMM_DIST_PATH}")"
   local found=false
 
-  log "Sauvegardes disponibles dans ${parent}:"
+  log "Available backups in ${parent}:"
   while IFS= read -r backup; do
     found=true
     local marker=""
     if [[ -f "${STATE_FILE}" && "$(cat "${STATE_FILE}")" == "${backup}" ]]; then
-      marker=" (dernière sauvegarde apply-theme)"
+      marker=" (latest apply-theme backup)"
     fi
     echo "  ${backup}${marker}"
   done < <(find "${parent}" -maxdepth 1 -type d -name "$(basename "${TRMM_DIST_PATH}").bak.*" | sort -r)
 
   if [[ "${found}" == "false" ]]; then
-    log "Aucune sauvegarde dist.bak.* trouvée."
-    log "Alternative: relancer ./update.sh TacticalRMM pour restaurer le frontend officiel."
+    log "No dist.bak.* backups found."
+    log "Alternative: run TacticalRMM ./update.sh to restore the official frontend."
   fi
 }
 
@@ -85,12 +85,12 @@ resolve_backup() {
 
 reload_nginx() {
   if [[ "${SKIP_NGINX_RELOAD}" == "true" ]]; then
-    log "Rechargement nginx ignoré (SKIP_NGINX_RELOAD=true)"
+    log "Skipping nginx reload (SKIP_NGINX_RELOAD=true)"
     return
   fi
 
   if command -v systemctl >/dev/null 2>&1 && systemctl is-active --quiet nginx 2>/dev/null; then
-    log "Rechargement de nginx"
+    log "Reloading nginx"
     systemctl reload nginx
   fi
 }
@@ -98,26 +98,26 @@ reload_nginx() {
 restore_backup() {
   local backup="$1"
 
-  [[ -n "${backup}" ]] || die "Aucune sauvegarde trouvée. Utilisez --list ou relancez ./update.sh TacticalRMM."
-  [[ -d "${backup}" ]] || die "Sauvegarde introuvable: ${backup}"
+  [[ -n "${backup}" ]] || die "No backup found. Use --list or run TacticalRMM ./update.sh."
+  [[ -d "${backup}" ]] || die "Backup not found: ${backup}"
 
   if [[ ! -w "$(dirname "${TRMM_DIST_PATH}")" ]] && [[ "$(id -u)" -ne 0 ]]; then
-    die "Permissions insuffisantes. Exécutez avec sudo."
+    die "Insufficient permissions. Run with sudo."
   fi
 
   local failed_backup="${TRMM_DIST_PATH}.failed.$(date +%s)"
   if [[ -d "${TRMM_DIST_PATH}" ]]; then
-    log "Mise de côté du frontend actuel → ${failed_backup}"
+    log "Moving current frontend aside → ${failed_backup}"
     mv "${TRMM_DIST_PATH}" "${failed_backup}"
   fi
 
-  log "Restauration de ${backup} → ${TRMM_DIST_PATH}"
+  log "Restoring ${backup} → ${TRMM_DIST_PATH}"
   cp -a "${backup}/." "${TRMM_DIST_PATH}/"
   chown -R www-data:www-data "${TRMM_DIST_PATH}" 2>/dev/null || true
 
   reload_nginx
-  log "Rollback terminé. Frontend officiel restauré depuis ${backup}"
-  log "Pensez à vider le cache navigateur (Ctrl+Shift+R)."
+  log "Rollback complete. Frontend restored from ${backup}"
+  log "Clear your browser cache (Ctrl+Shift+R)."
 }
 
 main() {
@@ -128,7 +128,7 @@ main() {
         shift
         ;;
       --backup)
-        [[ $# -ge 2 ]] || die "Option --backup requiert un chemin"
+        [[ $# -ge 2 ]] || die "--backup requires a path"
         BACKUP_PATH="$2"
         shift 2
         ;;
@@ -141,7 +141,7 @@ main() {
         exit 0
         ;;
       *)
-        die "Option inconnue: $1 (utilisez --help)"
+        die "Unknown option: $1 (use --help)"
         ;;
     esac
   done

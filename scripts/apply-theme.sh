@@ -24,7 +24,7 @@ die() {
 }
 
 require_cmd() {
-  command -v "$1" >/dev/null 2>&1 || die "Commande requise introuvable: $1"
+  command -v "$1" >/dev/null 2>&1 || die "Required command not found: $1"
 }
 
 detect_web_version() {
@@ -47,20 +47,20 @@ detect_web_version() {
     return
   fi
 
-  die "Impossible de détecter WEB_VERSION. Définissez TRMM_WEB_VERSION ou TRMM_SETTINGS."
+  die "Unable to detect WEB_VERSION. Set TRMM_WEB_VERSION or TRMM_SETTINGS."
 }
 
 prepare_build_dir() {
   local tag="v${WEB_VERSION}"
 
   if [[ -d "${TRMM_BUILD_DIR}/.git" ]]; then
-    log "Réutilisation du répertoire de build ${TRMM_BUILD_DIR}"
+    log "Reusing build directory ${TRMM_BUILD_DIR}"
     git -C "${TRMM_BUILD_DIR}" fetch --tags origin
     git -C "${TRMM_BUILD_DIR}" reset --hard
     git -C "${TRMM_BUILD_DIR}" clean -fdx
     git -C "${TRMM_BUILD_DIR}" checkout "${tag}" 2>/dev/null || git -C "${TRMM_BUILD_DIR}" checkout "tags/${tag}"
   else
-    log "Clone de ${TRMM_WEB_REPO} (tag ${tag})"
+    log "Cloning ${TRMM_WEB_REPO} (tag ${tag})"
     rm -rf "${TRMM_BUILD_DIR}"
     git clone --depth 1 --branch "${tag}" "${TRMM_WEB_REPO}" "${TRMM_BUILD_DIR}" 2>/dev/null || {
       git clone "${TRMM_WEB_REPO}" "${TRMM_BUILD_DIR}"
@@ -71,13 +71,13 @@ prepare_build_dir() {
 }
 
 copy_themes() {
-  log "Copie du pack de thèmes"
+  log "Copying theme pack"
   rm -rf "${TRMM_BUILD_DIR}/src/css/themes"
   cp -R "${THEME_DIR}/themes" "${TRMM_BUILD_DIR}/src/css/themes"
 }
 
 apply_patches() {
-  log "Application des patches frontend"
+  log "Applying frontend patches"
   copy_themes
 
   local patch
@@ -125,7 +125,7 @@ write_env_config() {
   local api_domain
 
   api_domain="$(detect_api_domain)"
-  [[ -n "${api_domain}" ]] || die "Impossible de créer env-config.js. Copiez-le depuis une sauvegarde dist.bak.* ou définissez PROD_URL."
+  [[ -n "${api_domain}" ]] || die "Unable to create env-config.js. Copy it from a dist.bak.* backup or set PROD_URL."
 
   echo "window._env_ = {PROD_URL: \"https://${api_domain}\"}" > "${TRMM_DIST_PATH}/env-config.js"
   log "env-config.js ${source} (PROD_URL=https://${api_domain})"
@@ -137,31 +137,31 @@ restore_env_config() {
 
   if [[ -n "${env_config_backup}" && -f "${env_config_backup}" ]]; then
     cp "${env_config_backup}" "${TRMM_DIST_PATH}/env-config.js"
-    log "env-config.js restauré depuis le déploiement précédent"
+    log "env-config.js restored from previous deployment"
     return
   fi
 
   if [[ -n "${dist_backup}" && -f "${dist_backup}/env-config.js" ]]; then
     cp "${dist_backup}/env-config.js" "${TRMM_DIST_PATH}/env-config.js"
-    log "env-config.js restauré depuis ${dist_backup}"
+    log "env-config.js restored from ${dist_backup}"
     return
   fi
 
-  write_env_config "généré"
+  write_env_config "generated"
 }
 
 deploy_dist() {
   local build_output="${TRMM_BUILD_DIR}/dist"
 
-  [[ -d "${build_output}" ]] || die "Répertoire de build introuvable: ${build_output}"
+  [[ -d "${build_output}" ]] || die "Build output directory not found: ${build_output}"
 
   if [[ "${DRY_RUN}" == "true" ]]; then
-    log "[DRY RUN] Déploiement simulé vers ${TRMM_DIST_PATH}"
+    log "[DRY RUN] Simulated deployment to ${TRMM_DIST_PATH}"
     return
   fi
 
   if [[ ! -w "$(dirname "${TRMM_DIST_PATH}")" ]] && [[ "$(id -u)" -ne 0 ]]; then
-    die "Permissions insuffisantes pour écrire dans ${TRMM_DIST_PATH}. Exécutez avec sudo."
+    die "Insufficient permissions to write to ${TRMM_DIST_PATH}. Run with sudo."
   fi
 
   local env_config_backup=""
@@ -173,7 +173,7 @@ deploy_dist() {
 
   local backup="${TRMM_DIST_PATH}.bak.$(date +%s)"
   if [[ -d "${TRMM_DIST_PATH}" ]]; then
-    log "Sauvegarde de ${TRMM_DIST_PATH} → ${backup}"
+    log "Backing up ${TRMM_DIST_PATH} → ${backup}"
     mv "${TRMM_DIST_PATH}" "${backup}"
     dist_backup="${backup}"
     mkdir -p "${THEME_DIR}/.state"
@@ -186,11 +186,11 @@ deploy_dist() {
   [[ -n "${env_config_backup}" ]] && rm -f "${env_config_backup}"
   chown -R www-data:www-data "${TRMM_DIST_PATH}" 2>/dev/null || true
 
-  log "Frontend déployé dans ${TRMM_DIST_PATH}"
+  log "Frontend deployed to ${TRMM_DIST_PATH}"
 }
 
 build_frontend() {
-  log "Installation des dépendances npm"
+  log "Installing npm dependencies"
   cd "${TRMM_BUILD_DIR}"
   if [[ -f package-lock.json ]]; then
     npm ci
@@ -198,7 +198,7 @@ build_frontend() {
     npm install
   fi
 
-  log "Build Quasar (peut prendre plusieurs minutes)"
+  log "Running Quasar build (this may take several minutes)"
   npx quasar build
 }
 
@@ -208,7 +208,7 @@ reload_nginx() {
   fi
 
   if command -v systemctl >/dev/null 2>&1 && systemctl is-active --quiet nginx 2>/dev/null; then
-    log "Rechargement de nginx"
+    log "Reloading nginx"
     systemctl reload nginx
   fi
 }
@@ -219,12 +219,12 @@ main() {
   require_cmd npx
 
   WEB_VERSION="$(detect_web_version)"
-  log "Version tacticalrmm-web ciblée: ${WEB_VERSION}"
+  log "Target tacticalrmm-web version: ${WEB_VERSION}"
 
   local supported
   supported="$(cat "${THEME_DIR}/SUPPORTED_WEB_VERSION" 2>/dev/null || echo "")"
   if [[ -n "${supported}" && "${WEB_VERSION}" != "${supported}" ]]; then
-    log "ATTENTION: testé avec WEB_VERSION=${supported}, serveur=${WEB_VERSION}"
+    log "WARNING: tested with WEB_VERSION=${supported}, server=${WEB_VERSION}"
   fi
 
   prepare_build_dir
@@ -236,7 +236,7 @@ main() {
   mkdir -p "${THEME_DIR}/.state"
   echo "${WEB_VERSION}" > "${THEME_DIR}/.state/last-applied-version"
 
-  log "Thèmes TacticalRMM déployés avec succès"
+  log "TacticalRMM themes deployed successfully"
 }
 
 main "$@"

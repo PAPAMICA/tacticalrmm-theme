@@ -1,7 +1,7 @@
 {
   "id": "dracula",
   "label": "Dracula",
-  "description": "Palette officielle Dracula — violet, cyan et vert néon",
+  "description": "Official Dracula palette — neon purple, cyan and green",
   "supportsDark": true,
   "supportsLight": true
 }

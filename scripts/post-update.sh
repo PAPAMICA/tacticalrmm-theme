@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Reapply Dracula theme after TacticalRMM update when WEB_VERSION changes.
+# Reapply themes after TacticalRMM update when WEB_VERSION changes.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -11,7 +11,7 @@ TRMM_SETTINGS="${TRMM_SETTINGS:-/rmm/api/tacticalrmm/tacticalrmm/settings.py}"
 FORCE="${FORCE:-false}"
 
 log() {
-  echo "[dracula-post-update] $*"
+  echo "[trmm-theme-post-update] $*"
 }
 
 get_current_web_version() {
@@ -33,7 +33,7 @@ main() {
 
   current="$(get_current_web_version)"
   if [[ -z "${current}" ]]; then
-    log "WEB_VERSION introuvable — lancement de apply-theme.sh avec la version par défaut du thème"
+    log "WEB_VERSION not found — running apply-theme.sh with default theme version"
     exec "${SCRIPT_DIR}/apply-theme.sh"
   fi
 
@@ -42,18 +42,18 @@ main() {
     last_applied="$(cat "${STATE_FILE}")"
   fi
 
-  log "WEB_VERSION actuel: ${current}"
-  log "Dernière application du thème: ${last_applied:-jamais}"
+  log "Current WEB_VERSION: ${current}"
+  log "Last theme application: ${last_applied:-never}"
 
   if [[ "${FORCE}" == "true" || "${current}" != "${last_applied}" ]]; then
     if [[ "${current}" != "${last_applied}" ]]; then
-      log "WEB_VERSION a changé — réapplication du thème Dracula"
+      log "WEB_VERSION changed — reapplying themes"
     else
-      log "FORCE=true — réapplication du thème Dracula"
+      log "FORCE=true — reapplying themes"
     fi
     TRMM_WEB_VERSION="${current}" exec "${SCRIPT_DIR}/apply-theme.sh"
   else
-    log "WEB_VERSION inchangé — aucune action requise"
+    log "WEB_VERSION unchanged — no action required"
   fi
 }
 

@@ -10,17 +10,17 @@ TRMM_MANAGE_DIR="${TRMM_MANAGE_DIR:-/rmm/api/tacticalrmm}"
 PROD_URL="${PROD_URL:-}"
 
 log() {
-  echo "[dracula-fix-env] $*"
+  echo "[trmm-theme-fix-env] $*"
 }
 
 die() {
-  echo "[dracula-fix-env] ERROR: $*" >&2
+  echo "[trmm-theme-fix-env] ERROR: $*" >&2
   exit 1
 }
 
 main() {
   if [[ -f "${TRMM_DIST_PATH}/env-config.js" ]]; then
-    log "env-config.js existe déjà dans ${TRMM_DIST_PATH}"
+    log "env-config.js already exists in ${TRMM_DIST_PATH}"
     cat "${TRMM_DIST_PATH}/env-config.js"
     exit 0
   fi
@@ -31,7 +31,7 @@ main() {
     if [[ -f "${backup}/env-config.js" ]]; then
       cp "${backup}/env-config.js" "${TRMM_DIST_PATH}/env-config.js"
       chown www-data:www-data "${TRMM_DIST_PATH}/env-config.js" 2>/dev/null || true
-      log "env-config.js restauré depuis ${backup}"
+      log "env-config.js restored from ${backup}"
       cat "${TRMM_DIST_PATH}/env-config.js"
       exit 0
     fi
@@ -42,7 +42,7 @@ main() {
   if [[ -n "${latest_backup}" && -f "${latest_backup}/env-config.js" ]]; then
     cp "${latest_backup}/env-config.js" "${TRMM_DIST_PATH}/env-config.js"
     chown www-data:www-data "${TRMM_DIST_PATH}/env-config.js" 2>/dev/null || true
-    log "env-config.js restauré depuis ${latest_backup}"
+    log "env-config.js restored from ${latest_backup}"
     cat "${TRMM_DIST_PATH}/env-config.js"
     exit 0
   fi
@@ -55,11 +55,11 @@ main() {
     api="$(cd "${TRMM_MANAGE_DIR}" && python3 manage.py get_config api 2>/dev/null || true)"
   fi
 
-  [[ -n "${api}" ]] || die "Impossible de déterminer l'URL API. Exécutez: PROD_URL=https://api.votredomaine.com $0"
+  [[ -n "${api}" ]] || die "Unable to determine API URL. Run: PROD_URL=https://api.yourdomain.com $0"
 
   echo "window._env_ = {PROD_URL: \"https://${api}\"}" | tee "${TRMM_DIST_PATH}/env-config.js"
   chown www-data:www-data "${TRMM_DIST_PATH}/env-config.js" 2>/dev/null || true
-  log "env-config.js généré"
+  log "env-config.js generated"
 }
 
 main "$@"
