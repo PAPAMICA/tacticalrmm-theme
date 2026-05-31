@@ -1,0 +1,12 @@
+diff --git a/api/tacticalrmm/accounts/models.py b/api/tacticalrmm/accounts/models.py
+index a2384fd..3488eff 100644
+--- a/api/tacticalrmm/accounts/models.py
++++ b/api/tacticalrmm/accounts/models.py
+@@ -46,6 +46,7 @@ class User(AbstractUser, BaseAuditModel):
+     dash_warning_color = models.CharField(max_length=255, default="warning")
+     clear_search_when_switching = models.BooleanField(default=True)
+     date_format = models.CharField(max_length=30, blank=True, null=True)
++    ui_theme = models.CharField(max_length=50, default="dracula")
+     is_installer_user = models.BooleanField(default=False)
+     last_login_ip = models.GenericIPAddressField(default=None, blank=True, null=True)
+ 

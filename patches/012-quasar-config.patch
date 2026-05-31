@@ -1,0 +1,13 @@
+diff --git a/quasar.config.js b/quasar.config.js
+index af5aa71..3d2b0e5 100644
+--- a/quasar.config.js
++++ b/quasar.config.js
+@@ -30,7 +30,7 @@ module.exports = configure(function (/* ctx */) {
+     // app boot file (/src/boot)
+     // --> boot files are part of "main.js"
+     // https://v2.quasar.dev/quasar-cli-vite/boot-files
+-    boot: ["pinia", "axios", "monaco", "integrations"],
++    boot: ["pinia", "axios", "theme", "monaco", "integrations"],
+ 
+     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
+     css: ["app.sass"],

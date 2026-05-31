@@ -73,6 +73,7 @@ prepare_build_dir() {
 apply_patches() {
   log "Application des patches Dracula"
   cp "${THEME_DIR}/palette/dracula.sass" "${TRMM_BUILD_DIR}/src/css/dracula.sass"
+  cp "${THEME_DIR}/palette/themes.sass" "${TRMM_BUILD_DIR}/src/css/themes.sass"
   cp "${THEME_DIR}/palette/dracula-components.sass" "${TRMM_BUILD_DIR}/src/css/dracula-components.sass"
 
   local patch

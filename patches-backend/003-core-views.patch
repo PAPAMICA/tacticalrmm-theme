@@ -1,0 +1,12 @@
+diff --git a/api/tacticalrmm/core/views.py b/api/tacticalrmm/core/views.py
+index f034078..b69dd97 100644
+--- a/api/tacticalrmm/core/views.py
++++ b/api/tacticalrmm/core/views.py
+@@ -149,6 +149,7 @@ def dashboard_info(request):
+             "dash_positive_color": request.user.dash_positive_color,
+             "dash_negative_color": request.user.dash_negative_color,
+             "dash_warning_color": request.user.dash_warning_color,
++            "ui_theme": request.user.ui_theme,
+             "run_cmd_placeholder_text": runcmd_placeholder_text(),
+             "server_scripts_enabled": core_settings.server_scripts_enabled,
+             "web_terminal_enabled": core_settings.web_terminal_enabled,

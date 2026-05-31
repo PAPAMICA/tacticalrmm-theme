@@ -1,0 +1,20 @@
+diff --git a/src/store/index.js b/src/store/index.js
+index 20c3fa8..cd64f13 100644
+--- a/src/store/index.js
++++ b/src/store/index.js
+@@ -2,6 +2,7 @@ import { createStore } from "vuex";
+ import { Screen, Dark, LoadingBar } from "quasar";
+ import axios from "axios";
+ import { formatDate } from "@/utils/format";
++import { applyTheme } from "@/utils/theme";
+ 
+ export default function () {
+   const Store = new createStore({
+@@ -241,6 +242,7 @@ export default function () {
+           commit("SET_CLIENT_TREE_SORT", data.client_tree_sort);
+           commit("SET_CLIENT_SPLITTER", data.client_tree_splitter);
+         }
++        applyTheme(data.ui_theme || "dracula");
+         Dark.set(data.dark_mode);
+         commit("setCurrentTRMMVersion", data.trmm_version);
+         commit("setLatestTRMMVersion", data.latest_trmm_ver);

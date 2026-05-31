@@ -1,13 +1,14 @@
 diff --git a/src/css/app.sass b/src/css/app.sass
-index 2280f2a..8d75527 100644
+index 2280f2a..0c63807 100644
 --- a/src/css/app.sass
 +++ b/src/css/app.sass
-@@ -1 +1,31 @@
+@@ -1 +1,32 @@
  // app global css in Sass form
 +
 +@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap")
 +
 +@import "dracula.sass"
++@import "themes.sass"
 +@import "dracula-components.sass"
 +
 +.xterm .xterm-viewport

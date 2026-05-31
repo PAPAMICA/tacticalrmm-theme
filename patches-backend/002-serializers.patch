@@ -1,0 +1,12 @@
+diff --git a/api/tacticalrmm/accounts/serializers.py b/api/tacticalrmm/accounts/serializers.py
+index c671733..64d6153 100644
+--- a/api/tacticalrmm/accounts/serializers.py
++++ b/api/tacticalrmm/accounts/serializers.py
+@@ -30,6 +30,7 @@ class UserUISerializer(ModelSerializer):
+             "clear_search_when_switching",
+             "block_dashboard_login",
+             "date_format",
++            "ui_theme",
+         ]
+ 
+ 

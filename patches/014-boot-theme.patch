@@ -1,0 +1,11 @@
+diff --git a/src/boot/theme.js b/src/boot/theme.js
+new file mode 100644
+index 0000000..a18346d
+--- /dev/null
++++ b/src/boot/theme.js
+@@ -0,0 +1,5 @@
++import { applyTheme } from "@/utils/theme";
++
++export default () => {
++  applyTheme("dracula");
++};

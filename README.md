@@ -15,6 +15,7 @@ Ce dépôt applique un **redesign UI complet** au frontend Quasar (`tacticalrmm-
 | **Navigation (FileBar)** | Barre pill flottante avec hover violet |
 | **Login** | Carte glassmorphism, logo, gradient animé, formulaire dark, SSO redesigné |
 | **Dashboard** | Tabs modernisés, splitters stylisés, arbre clients avec hover |
+| **Sélecteur de thème** | 3 thèmes interchangeables dans User Preferences |
 | **Tables** | Bordures arrondies, headers uppercase, hover lignes, sticky amélioré |
 | **Modales** | Header card (plus de q-bar), ombres profondes, bordures violettes |
 | **Formulaires** | Inputs filled avec focus ring violet, boutons avec ombre |
@@ -56,7 +57,15 @@ cd /opt/tacticalrmm-theme
 sudo chmod +x scripts/*.sh
 ```
 
-### 2. Appliquer le thème
+### 2. Appliquer les patches backend (requis pour le sélecteur de thème)
+
+```bash
+sudo ./scripts/apply-backend-patches.sh
+```
+
+Ajoute le champ `ui_theme` en base de données et l'expose via l'API (`/core/dashinfo/`, `/accounts/users/ui/`).
+
+### 3. Appliquer le thème frontend
 
 ```bash
 sudo ./scripts/apply-theme.sh
@@ -65,12 +74,26 @@ sudo ./scripts/apply-theme.sh
 Le script :
 1. Détecte `WEB_VERSION` depuis `/rmm/api/tacticalrmm/tacticalrmm/settings.py`
 2. Clone `tacticalrmm-web` au tag correspondant (`v0.101.59`)
-3. Applique les patches Dracula et copie la palette + favicon
+3. Applique les patches et copie la palette + favicon
 4. Exécute `quasar build`
-5. Déploie dans `/var/www/rmm/dist/`
+5. Déploie dans `/var/www/rmm/dist/` (préserve `env-config.js`)
 6. Recharge nginx
 
-### 3. Forcer un hard refresh navigateur
+### 4. Changer de thème dans l'interface
+
+**Settings → Preferences → User Interface → UI Theme**
+
+| Thème | Description |
+|-------|-------------|
+| **Dracula** | Thème sombre violet (défaut) |
+| **Classic (TacticalRMM)** | Apparence originale TacticalRMM |
+| **Alucard (Light)** | Variante claire officielle Dracula |
+
+Le choix est **sauvegardé par utilisateur** et appliqué instantanément sans rebuild.
+
+> **Alucard** : désactivez le dark mode (toggle lune/soleil) pour un meilleur rendu.
+
+### 5. Hard refresh navigateur
 
 Après déploiement, videz le cache ou utilisez `Ctrl+Shift+R` pour voir le nouveau thème.
 
@@ -171,12 +194,16 @@ Doc : [User Interface Preferences](https://docs.tacticalrmm.com/functions/user_u
 ```
 tacticalrmm-theme/
 ├── palette/
-│   ├── dracula.sass           # Tokens couleurs + design
-│   └── dracula-components.sass # Overrides Quasar globaux
-├── patches/                   # 9 patches pour tacticalrmm-web
+│   ├── dracula.sass           # Tokens design (radius, ombres)
+│   ├── themes.sass            # Variables CSS par thème (runtime)
+│   └── dracula-components.sass
+├── patches/                   # 14 patches frontend
+├── patches-backend/           # Patches Django + migration ui_theme
+├── frontend-src/              # Sources utilitaires (copiées via patches)
 ├── assets/favicon.ico
 ├── scripts/
 │   ├── apply-theme.sh
+│   ├── apply-backend-patches.sh
 │   ├── post-update.sh
 │   ├── rollback-theme.sh
 │   └── fix-env-config.sh
@@ -188,16 +215,30 @@ tacticalrmm-theme/
 | Patch | Fichier | Redesign |
 |-------|---------|----------|
 | 001 | `quasar.variables.sass` | Palette + border-radius Quasar |
-| 002 | `app.sass` | Import design system + police Inter |
-| 003 | `App.vue` | Tables, highlights, liens |
+| 002 | `app.sass` | Design system + Inter + themes |
+| 003 | `App.vue` | Tables, highlights, liens CSS vars |
 | 004 | `LoginView.vue` | Page login complète |
 | 005 | `MainLayout.vue` | Header gradient + badge version |
 | 006 | `FileBar.vue` | Navigation pill |
 | 007 | `DialogWrapper.vue` | Modales modernes |
 | 008 | `SubTableTabs.vue` | Tabs agent panel |
 | 009 | `DashboardView.vue` | Tabs serveurs/workstations |
-| — | `dracula.sass` / `dracula-components.sass` | Copiés depuis `palette/` |
+| 010 | `UserPreferences.vue` | **Sélecteur UI Theme** |
+| 011 | `store/index.js` | Application thème au chargement |
+| 012 | `quasar.config.js` | Boot file theme |
+| 013 | `utils/theme.js` | Logique changement de thème |
+| 014 | `boot/theme.js` | Thème par défaut au démarrage |
+| — | `themes.sass`, `dracula*.sass` | Copiés depuis `palette/` |
 | — | `public/favicon.ico` | Favicon Dracula |
+
+### Backend (patches-backend/)
+
+| Fichier | Changement |
+|---------|------------|
+| `accounts/models.py` | Champ `ui_theme` |
+| `accounts/serializers.py` | Exposé dans `UserUISerializer` |
+| `core/views.py` | Retourné par `/core/dashinfo/` |
+| `migrations/0041_user_ui_theme.py` | Migration Django |
 
 ## Limitations
 
