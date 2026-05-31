@@ -1,6 +1,17 @@
-# TacticalRMM — Multi-Theme Pack
+<p align="center">
+  <a href="https://mickaelasseline.com">
+    <img src="https://zupimages.net/up/20/04/7vtd.png" width="140px" alt="PAPAMICA" />
+  </a>
+</p>
 
-UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) frontend: full redesign, **5 themes** with **dark + light** variants, instant switching in User Preferences.
+<p align="center">
+  <a href="#"><img src="https://readme-typing-svg.herokuapp.com?center=true&vCenter=true&lines=TacticalRMM+Themes;"></a>
+</p>
+
+<div align="center">
+A multi-theme UI pack for the TacticalRMM frontend — full redesign with dark &amp; light variants.
+</br>Use with : <a href="https://github.com/amidaware/tacticalrmm">TacticalRMM</a>
+</div>
 
 **Tested TacticalRMM version:** `WEB_VERSION=0.101.59` (TRMM v1.4.0)
 
@@ -18,7 +29,7 @@ UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) fr
 
 Each theme has **two variants**:
 
-- **UI Theme** (Preferences) → theme choice (`dracula`, `nothing`, etc.)
+- **UI Theme** (Preferences) → theme choice (`dracula`, `cyber`, `swiss`, etc.)
 - **Moon/sun toggle** (header) → switches dark/light **for the active theme**
 
 ## UI redesign
@@ -36,13 +47,41 @@ Each theme has **two variants**:
 | **Forms** | Filled inputs with focus ring, buttons with shadow |
 | **Global components** | Menus, chips, tooltips, notifications, scrollbars |
 
-## Dracula preview (default theme)
+## Theme previews
 
-| Element | Dark | Light |
-|---------|------|-------|
-| Primary | `#BD93F9` | `#644AC8` |
-| Background | `#282A36` | `#F6F5FA` |
-| Accent | `#FF79C6` | `#A3144D` |
+Screenshots from a live TacticalRMM instance. Toggle **dark/light** in the header to switch variants.
+
+### Theme selector
+
+<p align="center">
+  <img src="images/settings.png" alt="UI Theme selector in User Preferences" width="800" />
+</p>
+
+### Dracula
+
+<p align="center">
+  <img src="images/dracula.png" alt="Dracula theme — neon purple dashboard" width="800" />
+</p>
+
+### Cyber Dashboard
+
+<p align="center">
+  <img src="images/cyber.png" alt="Cyber Dashboard theme — NOC/SOC cyan glow" width="800" />
+</p>
+
+### Swiss Enterprise
+
+<p align="center">
+  <img src="images/swiss.png" alt="Swiss Enterprise theme — banking precision red accent" width="800" />
+</p>
+
+### Terminal SRE
+
+<p align="center">
+  <img src="images/terminal.png" alt="Terminal SRE theme — GitHub-style engineer dashboard" width="800" />
+</p>
+
+> **Classic** keeps the original TacticalRMM / Quasar look — flat layout, no floating panels. No screenshot yet.
 
 ## Server requirements
 
@@ -217,6 +256,7 @@ tacticalrmm-theme/
 ├── patches/                   # 14 frontend patches
 ├── patches-backend/           # Django patches + ui_theme migration
 ├── frontend-src/              # Utility sources (reference)
+├── images/                    # Theme preview screenshots
 ├── assets/favicon.ico
 └── scripts/
 ```
