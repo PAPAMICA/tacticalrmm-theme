@@ -7,6 +7,7 @@ THEME_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 TRMM_WEB_REPO="${TRMM_WEB_REPO:-https://github.com/amidaware/tacticalrmm-web.git}"
 TRMM_SETTINGS="${TRMM_SETTINGS:-/rmm/api/tacticalrmm/tacticalrmm/settings.py}"
+TRMM_MANAGE_DIR="${TRMM_MANAGE_DIR:-/rmm/api/tacticalrmm}"
 TRMM_DIST_PATH="${TRMM_DIST_PATH:-/var/www/rmm/dist}"
 TRMM_BUILD_DIR="${TRMM_BUILD_DIR:-/tmp/tacticalrmm-web-dracula-build}"
 TRMM_WEB_VERSION="${TRMM_WEB_VERSION:-}"
@@ -72,6 +73,7 @@ prepare_build_dir() {
 apply_patches() {
   log "Application des patches Dracula"
   cp "${THEME_DIR}/palette/dracula.sass" "${TRMM_BUILD_DIR}/src/css/dracula.sass"
+  cp "${THEME_DIR}/palette/dracula-components.sass" "${TRMM_BUILD_DIR}/src/css/dracula-components.sass"
 
   local patch
   for patch in "${THEME_DIR}"/patches/*.patch; do
@@ -97,6 +99,66 @@ build_frontend() {
   npx quasar build
 }
 
+detect_api_domain() {
+  local api=""
+
+  if [[ -n "${PROD_URL:-}" ]]; then
+    local url="${PROD_URL#https://}"
+    url="${url#http://}"
+    echo "${url}"
+    return
+  fi
+
+  if [[ -d "${TRMM_MANAGE_DIR}" ]]; then
+    api="$(cd "${TRMM_MANAGE_DIR}" && python3 manage.py get_config api 2>/dev/null || true)"
+    if [[ -n "${api}" ]]; then
+      echo "${api}"
+      return
+    fi
+  fi
+
+  local local_settings="${TRMM_MANAGE_DIR}/tacticalrmm/local_settings.py"
+  if [[ -f "${local_settings}" ]]; then
+    api="$(grep -E 'ALLOWED_HOSTS' "${local_settings}" | head -1 | sed -E 's/.*\["([^"]+)".*/\1/')"
+    if [[ -n "${api}" ]]; then
+      echo "${api}"
+      return
+    fi
+  fi
+
+  echo ""
+}
+
+write_env_config() {
+  local source="$1"
+  local api_domain
+
+  api_domain="$(detect_api_domain)"
+  [[ -n "${api_domain}" ]] || die "Impossible de créer env-config.js. Copiez-le depuis une sauvegarde dist.bak.* ou définissez PROD_URL."
+
+  echo "window._env_ = {PROD_URL: \"https://${api_domain}\"}" > "${TRMM_DIST_PATH}/env-config.js"
+  log "env-config.js ${source} (PROD_URL=https://${api_domain})"
+}
+
+restore_env_config() {
+  local env_config_backup="$1"
+  local dist_backup="$2"
+
+  if [[ -n "${env_config_backup}" && -f "${env_config_backup}" ]]; then
+    cp "${env_config_backup}" "${TRMM_DIST_PATH}/env-config.js"
+    log "env-config.js restauré depuis le déploiement précédent"
+    return
+  fi
+
+  if [[ -n "${dist_backup}" && -f "${dist_backup}/env-config.js" ]]; then
+    cp "${dist_backup}/env-config.js" "${TRMM_DIST_PATH}/env-config.js"
+    log "env-config.js restauré depuis ${dist_backup}"
+    return
+  fi
+
+  write_env_config "généré"
+}
+
 deploy_dist() {
   local build_output="${TRMM_BUILD_DIR}/dist"
 
@@ -111,16 +173,26 @@ deploy_dist() {
     die "Permissions insuffisantes pour écrire dans ${TRMM_DIST_PATH}. Exécutez avec sudo."
   fi
 
+  local env_config_backup=""
+  local dist_backup=""
+  if [[ -f "${TRMM_DIST_PATH}/env-config.js" ]]; then
+    env_config_backup="$(mktemp)"
+    cp "${TRMM_DIST_PATH}/env-config.js" "${env_config_backup}"
+  fi
+
   local backup="${TRMM_DIST_PATH}.bak.$(date +%s)"
   if [[ -d "${TRMM_DIST_PATH}" ]]; then
     log "Sauvegarde de ${TRMM_DIST_PATH} → ${backup}"
     mv "${TRMM_DIST_PATH}" "${backup}"
+    dist_backup="${backup}"
     mkdir -p "${THEME_DIR}/.state"
     echo "${backup}" > "${THEME_DIR}/.state/last-backup"
   fi
 
   mkdir -p "${TRMM_DIST_PATH}"
   cp -a "${build_output}/." "${TRMM_DIST_PATH}/"
+  restore_env_config "${env_config_backup}" "${dist_backup}"
+  [[ -n "${env_config_backup}" ]] && rm -f "${env_config_backup}"
   chown -R www-data:www-data "${TRMM_DIST_PATH}" 2>/dev/null || true
 
   log "Frontend déployé dans ${TRMM_DIST_PATH}"

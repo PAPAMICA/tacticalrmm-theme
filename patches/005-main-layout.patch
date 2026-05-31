@@ -1,12 +1,40 @@
 diff --git a/src/layouts/MainLayout.vue b/src/layouts/MainLayout.vue
-index de394f5..b80ca46 100644
+index de394f5..2d25ad6 100644
 --- a/src/layouts/MainLayout.vue
 +++ b/src/layouts/MainLayout.vue
 @@ -1,6 +1,6 @@
  <template>
    <q-layout view="hHh lpR fFf">
 -    <q-header elevated class="bg-grey-9 text-white">
-+    <q-header elevated class="bg-primary text-white">
++    <q-header class="dracula-header text-white">
        <q-banner
          v-if="needRefresh"
          inline-actions
+@@ -59,10 +59,16 @@
+         >
+           <q-tooltip>Back to Dashboard</q-tooltip>
+         </q-btn>
+-        <q-toolbar-title>
+-          Tactical RMM<span class="text-overline q-ml-sm"
+-            >v{{ currentTRMMVersion }}</span
++        <q-toolbar-title class="row items-center no-wrap">
++          <span class="text-weight-bold">Tactical RMM</span>
++          <q-badge
++            color="transparent"
++            text-color="grey-4"
++            class="q-ml-sm text-caption"
++            style="border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 2px 8px"
+           >
++            v{{ currentTRMMVersion }}
++          </q-badge>
+           <!-- update check -->
+           <q-chip
+             v-if="updateAvailable"
+@@ -84,7 +90,6 @@
+             >SSL certificate expires in {{ daysUntilCertExpires }} days</q-chip
+           >
+         </q-toolbar-title>
+-        <!-- temp dark mode toggle -->
+         <q-toggle
+           v-model="darkMode"
+           class="q-mr-sm"

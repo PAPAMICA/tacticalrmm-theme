@@ -1,0 +1,12 @@
+diff --git a/src/components/FileBar.vue b/src/components/FileBar.vue
+index 9f442f8..cbb081a 100644
+--- a/src/components/FileBar.vue
++++ b/src/components/FileBar.vue
+@@ -1,6 +1,6 @@
+ <template>
+   <div class="q-pb-sm">
+-    <q-bar>
++    <q-bar class="dracula-nav">
+       <q-btn-group flat>
+         <q-btn size="md" dense no-caps flat label="File">
+           <q-menu>

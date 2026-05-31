@@ -1,6 +1,5 @@
 // Dracula Theme — Official palette
 // https://draculatheme.com/spec
-// MIT License — https://github.com/dracula/dracula-theme
 
 // Core palette
 $drac-bg: #282a36
@@ -22,6 +21,18 @@ $drac-ui-bg-dark: #21222c
 $drac-ui-bg-light: #343746
 $drac-ui-bg-lighter: #424450
 
+// Design tokens
+$drac-radius-sm: 6px
+$drac-radius-md: 10px
+$drac-radius-lg: 16px
+$drac-radius-xl: 20px
+$drac-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.28)
+$drac-shadow-md: 0 8px 28px rgba(0, 0, 0, 0.38)
+$drac-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45)
+$drac-border: 1px solid rgba(98, 114, 164, 0.35)
+$drac-font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif
+$drac-transition: 0.18s ease
+
 // Quasar brand mapping
 $drac-primary: $drac-purple
 $drac-secondary: $drac-cyan
@@ -32,7 +43,6 @@ $drac-negative: $drac-red
 $drac-info: $drac-cyan
 $drac-warning: $drac-orange
 
-// CSS custom properties (runtime overrides)
 :root
   --drac-bg: #{$drac-bg}
   --drac-current-line: #{$drac-current-line}
@@ -49,6 +59,12 @@ $drac-warning: $drac-orange
   --drac-ui-bg-darker: #{$drac-ui-bg-darker}
   --drac-ui-bg-dark: #{$drac-ui-bg-dark}
   --drac-ui-bg-light: #{$drac-ui-bg-light}
+  --drac-radius-sm: #{$drac-radius-sm}
+  --drac-radius-md: #{$drac-radius-md}
+  --drac-radius-lg: #{$drac-radius-lg}
+  --drac-shadow-sm: #{$drac-shadow-sm}
+  --drac-shadow-md: #{$drac-shadow-md}
+  --drac-font: #{$drac-font}
 
 .body--dark
   --q-primary: #{$drac-primary}

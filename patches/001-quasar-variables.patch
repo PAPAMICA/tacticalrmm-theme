@@ -1,15 +1,14 @@
 diff --git a/src/css/quasar.variables.sass b/src/css/quasar.variables.sass
-index cf59b8e..702f029 100644
+index cf59b8e..0cf808d 100644
 --- a/src/css/quasar.variables.sass
 +++ b/src/css/quasar.variables.sass
-@@ -12,13 +12,14 @@
+@@ -12,13 +12,17 @@
  // to match your app's branding.
  // Tip: Use the "Theme Builder" on Quasar's documentation website.
  
 -$primary   : #1976D2
 -$secondary : #26A69A
 -$accent    : #9C27B0
-+// Dracula Theme — https://draculatheme.com/spec
 +$primary   : #BD93F9
 +$secondary : #8BE9FD
 +$accent    : #FF79C6
@@ -25,3 +24,7 @@ index cf59b8e..702f029 100644
 +$negative  : #FF5555
 +$info      : #8BE9FD
 +$warning   : #FFB86C
++
++$generic-border-radius          : 10px
++$button-border-radius             : 8px
++$button-padding                   : 8px 16px

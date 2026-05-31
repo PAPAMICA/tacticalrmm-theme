@@ -2,11 +2,25 @@
 
 Thème [Dracula](https://draculatheme.com) pour le frontend [TacticalRMM](https://github.com/amidaware/tacticalrmm).
 
-Ce dépôt applique une palette Dracula complète au frontend Quasar (`tacticalrmm-web`) via des patches source, puis rebuild et déploie le résultat sur votre serveur.
+Ce dépôt applique un **redesign UI complet** au frontend Quasar (`tacticalrmm-web`) : palette Dracula, typographie, composants, layout et pages clés — via des patches source, puis rebuild et déploiement sur votre serveur.
 
 **Version TacticalRMM testée :** `WEB_VERSION=0.101.59` (TRMM v1.4.0)
 
-## Aperçu
+## Redesign — ce qui change
+
+| Zone | Changements |
+|------|-------------|
+| **Design system** | Tokens (radius, ombres, bordures), police Inter, variables CSS `--drac-*` |
+| **Header** | Gradient violet, badge version, boutons arrondis |
+| **Navigation (FileBar)** | Barre pill flottante avec hover violet |
+| **Login** | Carte glassmorphism, logo, gradient animé, formulaire dark, SSO redesigné |
+| **Dashboard** | Tabs modernisés, splitters stylisés, arbre clients avec hover |
+| **Tables** | Bordures arrondies, headers uppercase, hover lignes, sticky amélioré |
+| **Modales** | Header card (plus de q-bar), ombres profondes, bordures violettes |
+| **Formulaires** | Inputs filled avec focus ring violet, boutons avec ombre |
+| **Composants globaux** | Menus, chips, tooltips, notifications, scrollbars |
+
+## Aperçu couleurs
 
 | Élément | Couleur Dracula |
 |---------|-----------------|
@@ -156,25 +170,34 @@ Doc : [User Interface Preferences](https://docs.tacticalrmm.com/functions/user_u
 
 ```
 tacticalrmm-theme/
-├── palette/dracula.sass       # Tokens Dracula + variables Quasar CSS
-├── patches/                   # Patches git pour tacticalrmm-web
-├── assets/favicon.ico         # Favicon Dracula
+├── palette/
+│   ├── dracula.sass           # Tokens couleurs + design
+│   └── dracula-components.sass # Overrides Quasar globaux
+├── patches/                   # 9 patches pour tacticalrmm-web
+├── assets/favicon.ico
 ├── scripts/
-│   ├── apply-theme.sh         # Script principal
-│   ├── post-update.sh         # Hook post-update
-│   └── rollback-theme.sh      # Restauration depuis sauvegarde
-└── SUPPORTED_WEB_VERSION      # Version WEB testée
+│   ├── apply-theme.sh
+│   ├── post-update.sh
+│   ├── rollback-theme.sh
+│   └── fix-env-config.sh
+└── SUPPORTED_WEB_VERSION
 ```
 
 ## Fichiers modifiés (upstream)
 
-- `src/css/quasar.variables.sass` — palette Quasar compile-time
-- `src/css/app.sass` — import palette + scrollbars terminal
-- `src/css/dracula.sass` — copié depuis `palette/` (runtime CSS vars)
-- `src/App.vue` — tables, highlights, statuts agents
-- `src/views/LoginView.vue` — gradient et titre login
-- `src/layouts/MainLayout.vue` — header violet Dracula
-- `public/favicon.ico` — favicon personnalisé
+| Patch | Fichier | Redesign |
+|-------|---------|----------|
+| 001 | `quasar.variables.sass` | Palette + border-radius Quasar |
+| 002 | `app.sass` | Import design system + police Inter |
+| 003 | `App.vue` | Tables, highlights, liens |
+| 004 | `LoginView.vue` | Page login complète |
+| 005 | `MainLayout.vue` | Header gradient + badge version |
+| 006 | `FileBar.vue` | Navigation pill |
+| 007 | `DialogWrapper.vue` | Modales modernes |
+| 008 | `SubTableTabs.vue` | Tabs agent panel |
+| 009 | `DashboardView.vue` | Tabs serveurs/workstations |
+| — | `dracula.sass` / `dracula-components.sass` | Copiés depuis `palette/` |
+| — | `public/favicon.ico` | Favicon Dracula |
 
 ## Limitations
 
@@ -184,6 +207,35 @@ tacticalrmm-theme/
 - **Mises à jour** : le thème doit être réappliqué après chaque `./update.sh`
 
 ## Dépannage
+
+### Page blanche — `Unexpected token '<'` dans env-config.js
+
+Le build Quasar **n'inclut pas** `env-config.js`. Ce fichier est créé par TacticalRMM à l'installation (`update.sh`) et contient l'URL de l'API :
+
+```js
+window._env_ = {PROD_URL: "https://api.votredomaine.com"}
+```
+
+Sans ce fichier, nginx renvoie `index.html` à la place → page blanche.
+
+**Correctif immédiat** (sur le serveur) :
+
+```bash
+# Option 1 : script de réparation
+sudo /opt/tacticalrmm-theme/scripts/fix-env-config.sh
+
+# Option 2 : copier depuis la sauvegarde
+sudo cp /var/www/rmm/dist.bak.*/env-config.js /var/www/rmm/dist/env-config.js
+
+# Option 3 : régénérer manuellement
+API=$(cd /rmm/api/tacticalrmm && python3 manage.py get_config api)
+echo "window._env_ = {PROD_URL: \"https://${API}\"}" | sudo tee /var/www/rmm/dist/env-config.js
+sudo chown www-data:www-data /var/www/rmm/dist/env-config.js
+```
+
+Puis hard refresh navigateur (`Ctrl+Shift+R`).
+
+Les versions récentes de `apply-theme.sh` préservent automatiquement `env-config.js` lors du déploiement.
 
 ### Un patch ne s'applique pas
 

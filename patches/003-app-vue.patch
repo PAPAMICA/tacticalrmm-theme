@@ -1,17 +1,22 @@
 diff --git a/src/App.vue b/src/App.vue
-index ea79c71..bb27b0c 100644
+index ea79c71..f503244 100644
 --- a/src/App.vue
 +++ b/src/App.vue
-@@ -13,7 +13,7 @@ body
+@@ -13,7 +13,12 @@ body
    overflow-y: hidden
  
  a
 -  color: #1976D2
 +  color: #BD93F9
++  text-decoration: none
++  transition: color 0.18s ease
++
++  &:hover
++    color: #FF79C6
  
  .tbl-sticky
    thead tr th
-@@ -68,34 +68,34 @@ a
+@@ -68,34 +73,34 @@ a
    .q-table__top,
    .q-table__bottom,
    thead tr:first-child th
@@ -23,11 +28,11 @@ index ea79c71..bb27b0c 100644
    .q-table__bottom,
    thead tr:first-child th
 -    background-color: #1d1d1d
-+    background-color: #44475a
++    background-color: #343746
  
  .bg-dark
 -  background-color: --q-page-dark
-+  background-color: #282a36
++  background-color: #21222c
  
  .bg-light
 -  background-color: #ffffff
@@ -35,22 +40,22 @@ index ea79c71..bb27b0c 100644
  
  .highlight
 -  background-color: #c9e6ff
-+  background-color: #6272a4
++  background-color: rgba(98, 114, 164, 0.35)
  
  .highlight-dark
 -  background-color: #404040
-+  background-color: #6272a4
++  background-color: rgba(189, 147, 249, 0.22)
  
  .action-completed
    background-color: $positive
  
  .agent-offline
 -  background: gray !important
-+  background: #6272a4 !important
++  background: rgba(98, 114, 164, 0.45) !important
  
  .agent-overdue
 -  background: red !important
-+  background: #ff5555 !important
++  background: rgba(255, 85, 85, 0.35) !important
  
  .min-width
    min-width: 0px !important

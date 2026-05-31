@@ -1,0 +1,38 @@
+diff --git a/src/components/ui/DialogWrapper.vue b/src/components/ui/DialogWrapper.vue
+index 8e9329c..823ef78 100644
+--- a/src/components/ui/DialogWrapper.vue
++++ b/src/components/ui/DialogWrapper.vue
+@@ -2,17 +2,17 @@
+   <q-dialog ref="dialogRef" @hide="onDialogHide" v-bind="dialogProps">
+     <q-card
+       v-if="!noCard"
+-      class="q-dialog-plugin"
++      class="q-dialog-plugin dracula-dialog"
+       :style="`min-width: ${width}vw`"
+     >
+-      <q-bar>
+-        {{ title }}
+-        <q-space />
+-        <q-btn dense flat icon="close" v-close-popup>
+-          <q-tooltip content-class="bg-white text-primary">Close</q-tooltip>
++      <q-card-section class="dracula-dialog-header row items-center no-wrap">
++        <div class="text-h6 col">{{ title }}</div>
++        <q-btn dense flat round icon="close" v-close-popup>
++          <q-tooltip>Close</q-tooltip>
+         </q-btn>
+-      </q-bar>
+-      <div class="scroll" :style="`height: ${height}vh`">
++      </q-card-section>
++      <q-separator />
++      <div class="dracula-dialog-body scroll" :style="`height: ${height}vh`">
+         <component
+           :is="vuecomponent"
+           v-bind="{ ...$attrs, ...componentProps }"
+@@ -60,7 +60,6 @@ export default {
+       useDialogPluginComponent();
+ 
+     return {
+-      // quasar dialog plugin
+       dialogRef,
+       onDialogHide,
+       onDialogOK,

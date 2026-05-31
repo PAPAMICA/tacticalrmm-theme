@@ -1,0 +1,13 @@
+diff --git a/src/components/SubTableTabs.vue b/src/components/SubTableTabs.vue
+index 0e242f0..43d0f12 100644
+--- a/src/components/SubTableTabs.vue
++++ b/src/components/SubTableTabs.vue
+@@ -7,7 +7,7 @@
+         v-model="subtab"
+         dense
+         inline-label
+-        class="text-grey"
++        class="text-grey dracula-subtabs"
+         active-color="primary"
+         indicator-color="primary"
+         align="left"

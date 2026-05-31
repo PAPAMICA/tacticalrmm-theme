@@ -1,0 +1,20 @@
+diff --git a/src/views/DashboardView.vue b/src/views/DashboardView.vue
+index b08a3b9..cd06b6a 100644
+--- a/src/views/DashboardView.vue
++++ b/src/views/DashboardView.vue
+@@ -1,5 +1,5 @@
+ <template>
+-  <q-page>
++  <q-page class="dracula-dashboard">
+     <FileBar />
+     <q-splitter
+       v-model="clientTreeSplitter"
+@@ -244,7 +244,7 @@
+                 dense
+                 no-caps
+                 inline-label
+-                class="text-grey"
++                class="text-grey dracula-subtabs"
+                 active-color="primary"
+                 indicator-color="primary"
+                 align="left"

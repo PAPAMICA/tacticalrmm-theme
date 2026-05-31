@@ -1,0 +1,305 @@
+@import "dracula.sass"
+
+// ─── Base ────────────────────────────────────────────────────────────────────
+body.body--dark
+  font-family: $drac-font
+  background: $drac-ui-bg-dark
+  color: $drac-fg
+
+  ::-webkit-scrollbar
+    width: 8px
+    height: 8px
+
+  ::-webkit-scrollbar-track
+    background: $drac-ui-bg-darker
+
+  ::-webkit-scrollbar-thumb
+    background: $drac-comment
+    border-radius: $drac-radius-sm
+
+  ::-webkit-scrollbar-thumb:hover
+    background: $drac-purple
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+.dracula-header
+  background: linear-gradient(135deg, darken($drac-purple, 18%) 0%, $drac-ui-bg-dark 55%, $drac-bg 100%) !important
+  border-bottom: $drac-border
+  box-shadow: $drac-shadow-md
+
+  .q-toolbar
+    min-height: 56px
+    padding: 0 16px
+
+  .q-toolbar-title
+    font-weight: 600
+    letter-spacing: 0.02em
+
+  .q-btn.flat
+    border-radius: $drac-radius-sm
+    transition: background $drac-transition
+
+    &:hover
+      background: rgba(255, 255, 255, 0.08)
+
+  .q-chip
+    border-radius: $drac-radius-md
+    font-weight: 500
+    border: 1px solid rgba(255, 255, 255, 0.12)
+
+  .q-toggle
+    margin-right: 4px
+
+// ─── Navigation (FileBar) ────────────────────────────────────────────────────
+.dracula-nav
+  background: $drac-ui-bg-light !important
+  border: $drac-border
+  border-radius: $drac-radius-md
+  margin: 8px 12px 0
+  padding: 4px 8px
+  min-height: 42px
+  box-shadow: $drac-shadow-sm
+
+  .q-btn
+    border-radius: $drac-radius-sm
+    font-weight: 500
+    letter-spacing: 0.01em
+    padding: 4px 12px
+    transition: all $drac-transition
+
+    &:hover
+      background: rgba(189, 147, 249, 0.15)
+      color: $drac-purple
+
+// ─── Dashboard panels ────────────────────────────────────────────────────────
+.body--dark .q-page
+  background: $drac-ui-bg-dark
+
+.body--dark .q-splitter
+  border-radius: $drac-radius-md
+  overflow: hidden
+
+  .q-splitter__separator
+    background: $drac-ui-bg-light
+
+  .q-avatar
+    background: $drac-purple !important
+    box-shadow: 0 0 0 3px rgba(189, 147, 249, 0.25)
+
+.body--dark .q-tree
+  background: transparent
+
+  .q-tree__node--selected .q-tree__node-header
+    background: rgba(189, 147, 249, 0.18)
+    border-radius: $drac-radius-sm
+
+  .q-tree__node-header:hover
+    background: rgba(98, 114, 164, 0.2)
+    border-radius: $drac-radius-sm
+
+.body--dark .q-list.rounded-borders
+  border-radius: $drac-radius-md
+  border: $drac-border
+
+// ─── Tabs ────────────────────────────────────────────────────────────────────
+.dracula-subtabs,
+.body--dark .q-tabs
+  background: $drac-ui-bg-light
+  border-bottom: $drac-border
+
+  .q-tab
+    border-radius: $drac-radius-sm $drac-radius-sm 0 0
+    font-weight: 500
+    min-height: 40px
+    transition: color $drac-transition
+
+  .q-tab--active
+    background: rgba(189, 147, 249, 0.12)
+
+  .q-tab__indicator
+    height: 3px
+    border-radius: 3px 3px 0 0
+
+// ─── Tables ──────────────────────────────────────────────────────────────────
+.body--dark .q-table
+  border-radius: $drac-radius-md
+  overflow: hidden
+  border: $drac-border
+
+  thead tr th
+    font-weight: 600
+    letter-spacing: 0.04em
+    text-transform: uppercase
+    font-size: 0.72rem
+    color: $drac-comment
+
+  tbody tr
+    transition: background $drac-transition
+
+    &:hover:not(.selected)
+      background: rgba(98, 114, 164, 0.12) !important
+
+  tbody td
+    border-color: rgba(98, 114, 164, 0.15)
+
+// ─── Cards & dialogs ─────────────────────────────────────────────────────────
+.body--dark .q-card
+  border-radius: $drac-radius-lg
+  border: $drac-border
+  box-shadow: $drac-shadow-md
+  background: $drac-ui-bg-light
+
+.dracula-dialog
+  border-radius: $drac-radius-lg !important
+  overflow: hidden
+  border: 1px solid rgba(189, 147, 249, 0.25) !important
+  box-shadow: $drac-shadow-lg !important
+
+.dracula-dialog-header
+  background: linear-gradient(90deg, rgba(189, 147, 249, 0.15) 0%, transparent 100%)
+  padding: 14px 18px
+  font-weight: 600
+
+.dracula-dialog-body
+  background: $drac-ui-bg-light
+
+.body--dark .q-bar
+  background: $drac-ui-bg-light
+  border-bottom: $drac-border
+  min-height: 44px
+  font-weight: 600
+
+// ─── Forms & inputs ──────────────────────────────────────────────────────────
+.body--dark .q-field--filled .q-field__control
+  border-radius: $drac-radius-md
+  background: $drac-ui-bg-darker
+  border: 1px solid transparent
+  transition: border-color $drac-transition, box-shadow $drac-transition
+
+.body--dark .q-field--filled.q-field--focused .q-field__control
+  border-color: rgba(189, 147, 249, 0.6)
+  box-shadow: 0 0 0 3px rgba(189, 147, 249, 0.15)
+
+.body--dark .q-field--outlined .q-field__control
+  border-radius: $drac-radius-md
+
+.body--dark .q-field--outlined.q-field--focused .q-field__control:before
+  border-color: $drac-purple
+
+// ─── Buttons ─────────────────────────────────────────────────────────────────
+.body--dark .q-btn
+  border-radius: $drac-radius-sm
+  font-weight: 500
+  letter-spacing: 0.02em
+  transition: all $drac-transition
+
+.body--dark .q-btn--unelevated.bg-primary,
+.body--dark .q-btn--unelevated.text-primary
+  box-shadow: 0 4px 14px rgba(189, 147, 249, 0.35)
+
+  &:hover
+    box-shadow: 0 6px 20px rgba(189, 147, 249, 0.45)
+
+// ─── Menus & dropdowns ───────────────────────────────────────────────────────
+.body--dark .q-menu
+  border-radius: $drac-radius-md
+  border: $drac-border
+  box-shadow: $drac-shadow-md
+  background: $drac-ui-bg-light
+
+  .q-item
+    border-radius: $drac-radius-sm
+    margin: 2px 6px
+    transition: background $drac-transition
+
+  .q-item:hover
+    background: rgba(189, 147, 249, 0.12)
+
+// ─── Chips & badges ──────────────────────────────────────────────────────────
+.body--dark .q-chip
+  border-radius: $drac-radius-md
+
+// ─── Banners ─────────────────────────────────────────────────────────────────
+.body--dark .q-banner
+  border-radius: 0
+
+// ─── Login page ────────────────────────────────────────────────────────────────
+.dracula-login-page
+  position: relative
+  overflow: hidden
+  min-height: 100vh
+
+.dracula-login-bg
+  position: absolute
+  inset: 0
+  background: radial-gradient(ellipse at 20% 20%, rgba(189, 147, 249, 0.18) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(139, 233, 253, 0.1) 0%, transparent 50%), linear-gradient(135deg, $drac-bg 0%, $drac-current-line 45%, $drac-ui-bg-dark 100%)
+  z-index: 0
+
+  &::after
+    content: ""
+    position: absolute
+    inset: 0
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236272a4' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+
+.dracula-login-card
+  position: relative
+  z-index: 1
+  width: 100%
+  max-width: 420px
+  background: rgba(40, 42, 54, 0.92) !important
+  backdrop-filter: blur(16px)
+  border: 1px solid rgba(189, 147, 249, 0.25) !important
+  border-radius: $drac-radius-xl !important
+  box-shadow: $drac-shadow-lg !important
+
+.dracula-login-logo
+  width: 72px
+  height: 72px
+  margin: 0 auto
+  border-radius: 50%
+  background: linear-gradient(135deg, $drac-purple 0%, $drac-pink 100%)
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 2rem
+  box-shadow: 0 8px 32px rgba(189, 147, 249, 0.4)
+
+.dracula-login-subtitle
+  color: $drac-comment
+  letter-spacing: 0.12em
+  text-transform: uppercase
+  font-size: 0.7rem
+  font-weight: 600
+
+.dracula-login-btn
+  border-radius: $drac-radius-md !important
+  padding: 12px 0 !important
+  font-weight: 600 !important
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  font-size: 0.85rem
+
+.dracula-sso-item
+  border-radius: $drac-radius-sm
+  transition: background $drac-transition
+
+  &:hover
+    background: rgba(189, 147, 249, 0.12)
+
+.dracula-2fa-card
+  border-radius: $drac-radius-lg !important
+  border: 1px solid rgba(189, 147, 249, 0.25) !important
+
+// ─── Search inputs on dashboard ──────────────────────────────────────────────
+.body--dark .q-input .q-field__control
+  border-radius: $drac-radius-md
+
+// ─── Tooltips ────────────────────────────────────────────────────────────────
+.body--dark .q-tooltip
+  border-radius: $drac-radius-sm
+  font-size: 0.78rem
+
+// ─── Notifications ───────────────────────────────────────────────────────────
+.body--dark .q-notification
+  border-radius: $drac-radius-md
+  border: $drac-border
+  box-shadow: $drac-shadow-md
