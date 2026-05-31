@@ -1,0 +1,28 @@
+diff --git a/src/views/LoginView.vue b/src/views/LoginView.vue
+index 244fde0..bebd5ae 100644
+--- a/src/views/LoginView.vue
++++ b/src/views/LoginView.vue
+@@ -7,7 +7,7 @@
+         >
+           <q-card-section>
+             <div class="text-center q-pt-lg">
+-              <div class="col text-h4 ellipsis">Tactical RMM</div>
++              <div class="col text-h4 ellipsis text-primary">Tactical RMM</div>
+             </div>
+           </q-card-section>
+           <q-card-section>
+@@ -187,10 +187,10 @@ onMounted(async () => {
+ <style>
+ .bg-image {
+   background-image: linear-gradient(
+-    90deg,
+-    rgba(20, 20, 29, 1) 0%,
+-    rgba(38, 42, 56, 1) 49%,
+-    rgba(15, 18, 20, 1) 100%
++    135deg,
++    #282a36 0%,
++    #44475a 50%,
++    #21222c 100%
+   );
+ }
+ </style>

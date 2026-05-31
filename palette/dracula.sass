@@ -1,0 +1,71 @@
+// Dracula Theme — Official palette
+// https://draculatheme.com/spec
+// MIT License — https://github.com/dracula/dracula-theme
+
+// Core palette
+$drac-bg: #282a36
+$drac-current-line: #44475a
+$drac-selection: #44475a
+$drac-fg: #f8f8f2
+$drac-comment: #6272a4
+$drac-red: #ff5555
+$drac-orange: #ffb86c
+$drac-yellow: #f1fa8c
+$drac-green: #50fa7b
+$drac-cyan: #8be9fd
+$drac-purple: #bd93f9
+$drac-pink: #ff79c6
+
+// UI surfaces
+$drac-ui-bg-darker: #191a21
+$drac-ui-bg-dark: #21222c
+$drac-ui-bg-light: #343746
+$drac-ui-bg-lighter: #424450
+
+// Quasar brand mapping
+$drac-primary: $drac-purple
+$drac-secondary: $drac-cyan
+$drac-accent: $drac-pink
+$drac-dark: $drac-bg
+$drac-positive: $drac-green
+$drac-negative: $drac-red
+$drac-info: $drac-cyan
+$drac-warning: $drac-orange
+
+// CSS custom properties (runtime overrides)
+:root
+  --drac-bg: #{$drac-bg}
+  --drac-current-line: #{$drac-current-line}
+  --drac-selection: #{$drac-selection}
+  --drac-fg: #{$drac-fg}
+  --drac-comment: #{$drac-comment}
+  --drac-red: #{$drac-red}
+  --drac-orange: #{$drac-orange}
+  --drac-yellow: #{$drac-yellow}
+  --drac-green: #{$drac-green}
+  --drac-cyan: #{$drac-cyan}
+  --drac-purple: #{$drac-purple}
+  --drac-pink: #{$drac-pink}
+  --drac-ui-bg-darker: #{$drac-ui-bg-darker}
+  --drac-ui-bg-dark: #{$drac-ui-bg-dark}
+  --drac-ui-bg-light: #{$drac-ui-bg-light}
+
+.body--dark
+  --q-primary: #{$drac-primary}
+  --q-secondary: #{$drac-secondary}
+  --q-accent: #{$drac-accent}
+  --q-positive: #{$drac-positive}
+  --q-negative: #{$drac-negative}
+  --q-info: #{$drac-info}
+  --q-warning: #{$drac-warning}
+  --q-dark: #{$drac-dark}
+  --q-dark-page: #{$drac-ui-bg-dark}
+
+.body--light
+  --q-primary: #{$drac-primary}
+  --q-secondary: #{$drac-secondary}
+  --q-accent: #{$drac-accent}
+  --q-positive: #{$drac-positive}
+  --q-negative: #{$drac-negative}
+  --q-info: #{$drac-info}
+  --q-warning: #{$drac-warning}

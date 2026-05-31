@@ -1,0 +1,56 @@
+diff --git a/src/App.vue b/src/App.vue
+index ea79c71..bb27b0c 100644
+--- a/src/App.vue
++++ b/src/App.vue
+@@ -13,7 +13,7 @@ body
+   overflow-y: hidden
+ 
+ a
+-  color: #1976D2
++  color: #BD93F9
+ 
+ .tbl-sticky
+   thead tr th
+@@ -68,34 +68,34 @@ a
+   .q-table__top,
+   .q-table__bottom,
+   thead tr:first-child th
+-    background-color: #f5f4f2
++    background-color: #f8f8f2
+ 
+ .table-bgcolor-dark
+   .q-table__top,
+   .q-table__bottom,
+   thead tr:first-child th
+-    background-color: #1d1d1d
++    background-color: #44475a
+ 
+ .bg-dark
+-  background-color: --q-page-dark
++  background-color: #282a36
+ 
+ .bg-light
+-  background-color: #ffffff
++  background-color: #f8f8f2
+ 
+ .highlight
+-  background-color: #c9e6ff
++  background-color: #6272a4
+ 
+ .highlight-dark
+-  background-color: #404040
++  background-color: #6272a4
+ 
+ .action-completed
+   background-color: $positive
+ 
+ .agent-offline
+-  background: gray !important
++  background: #6272a4 !important
+ 
+ .agent-overdue
+-  background: red !important
++  background: #ff5555 !important
+ 
+ .min-width
+   min-width: 0px !important
