@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Apply Dracula theme to TacticalRMM by rebuilding tacticalrmm-web with patches.
+# Apply TacticalRMM UI themes by rebuilding tacticalrmm-web with patches.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -9,17 +9,17 @@ TRMM_WEB_REPO="${TRMM_WEB_REPO:-https://github.com/amidaware/tacticalrmm-web.git
 TRMM_SETTINGS="${TRMM_SETTINGS:-/rmm/api/tacticalrmm/tacticalrmm/settings.py}"
 TRMM_MANAGE_DIR="${TRMM_MANAGE_DIR:-/rmm/api/tacticalrmm}"
 TRMM_DIST_PATH="${TRMM_DIST_PATH:-/var/www/rmm/dist}"
-TRMM_BUILD_DIR="${TRMM_BUILD_DIR:-/tmp/tacticalrmm-web-dracula-build}"
+TRMM_BUILD_DIR="${TRMM_BUILD_DIR:-/tmp/tacticalrmm-web-theme-build}"
 TRMM_WEB_VERSION="${TRMM_WEB_VERSION:-}"
 SKIP_NGINX_RELOAD="${SKIP_NGINX_RELOAD:-false}"
 DRY_RUN="${DRY_RUN:-false}"
 
 log() {
-  echo "[dracula-theme] $*"
+  echo "[trmm-theme] $*"
 }
 
 die() {
-  echo "[dracula-theme] ERROR: $*" >&2
+  echo "[trmm-theme] ERROR: $*" >&2
   exit 1
 }
 
@@ -70,11 +70,15 @@ prepare_build_dir() {
   fi
 }
 
+copy_themes() {
+  log "Copie du pack de thèmes"
+  rm -rf "${TRMM_BUILD_DIR}/src/css/themes"
+  cp -R "${THEME_DIR}/themes" "${TRMM_BUILD_DIR}/src/css/themes"
+}
+
 apply_patches() {
-  log "Application des patches Dracula"
-  cp "${THEME_DIR}/palette/dracula.sass" "${TRMM_BUILD_DIR}/src/css/dracula.sass"
-  cp "${THEME_DIR}/palette/themes.sass" "${TRMM_BUILD_DIR}/src/css/themes.sass"
-  cp "${THEME_DIR}/palette/dracula-components.sass" "${TRMM_BUILD_DIR}/src/css/dracula-components.sass"
+  log "Application des patches frontend"
+  copy_themes
 
   local patch
   for patch in "${THEME_DIR}"/patches/*.patch; do
@@ -84,20 +88,6 @@ apply_patches() {
   done
 
   cp "${THEME_DIR}/assets/favicon.ico" "${TRMM_BUILD_DIR}/public/favicon.ico"
-  log "Favicon Dracula installé"
-}
-
-build_frontend() {
-  log "Installation des dépendances npm"
-  cd "${TRMM_BUILD_DIR}"
-  if [[ -f package-lock.json ]]; then
-    npm ci
-  else
-    npm install
-  fi
-
-  log "Build Quasar (peut prendre plusieurs minutes)"
-  npx quasar build
 }
 
 detect_api_domain() {
@@ -199,17 +189,27 @@ deploy_dist() {
   log "Frontend déployé dans ${TRMM_DIST_PATH}"
 }
 
+build_frontend() {
+  log "Installation des dépendances npm"
+  cd "${TRMM_BUILD_DIR}"
+  if [[ -f package-lock.json ]]; then
+    npm ci
+  else
+    npm install
+  fi
+
+  log "Build Quasar (peut prendre plusieurs minutes)"
+  npx quasar build
+}
+
 reload_nginx() {
   if [[ "${SKIP_NGINX_RELOAD}" == "true" ]]; then
-    log "Rechargement nginx ignoré (SKIP_NGINX_RELOAD=true)"
     return
   fi
 
   if command -v systemctl >/dev/null 2>&1 && systemctl is-active --quiet nginx 2>/dev/null; then
     log "Rechargement de nginx"
     systemctl reload nginx
-  else
-    log "nginx non actif ou systemctl indisponible — rechargement ignoré"
   fi
 }
 
@@ -224,8 +224,7 @@ main() {
   local supported
   supported="$(cat "${THEME_DIR}/SUPPORTED_WEB_VERSION" 2>/dev/null || echo "")"
   if [[ -n "${supported}" && "${WEB_VERSION}" != "${supported}" ]]; then
-    log "ATTENTION: ce thème a été testé avec WEB_VERSION=${supported}, votre serveur utilise ${WEB_VERSION}."
-    log "Les patches peuvent échouer — vérifiez SUPPORTED_WEB_VERSION ou mettez à jour le dépôt du thème."
+    log "ATTENTION: testé avec WEB_VERSION=${supported}, serveur=${WEB_VERSION}"
   fi
 
   prepare_build_dir
@@ -237,7 +236,7 @@ main() {
   mkdir -p "${THEME_DIR}/.state"
   echo "${WEB_VERSION}" > "${THEME_DIR}/.state/last-applied-version"
 
-  log "Thème Dracula appliqué avec succès (WEB_VERSION=${WEB_VERSION})"
+  log "Thèmes TacticalRMM déployés avec succès"
 }
 
 main "$@"

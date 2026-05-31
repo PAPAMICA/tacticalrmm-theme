@@ -1,55 +1,65 @@
-# TacticalRMM — Dracula Theme
+# TacticalRMM — Multi-Theme Pack
 
-Thème [Dracula](https://draculatheme.com) pour le frontend [TacticalRMM](https://github.com/amidaware/tacticalrmm).
+UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) frontend: full redesign, **5 themes** with **dark + light** variants, instant switching in User Preferences.
 
-Ce dépôt applique un **redesign UI complet** au frontend Quasar (`tacticalrmm-web`) : palette Dracula, typographie, composants, layout et pages clés — via des patches source, puis rebuild et déploiement sur votre serveur.
+**Tested TacticalRMM version:** `WEB_VERSION=0.101.59` (TRMM v1.4.0)
 
-**Version TacticalRMM testée :** `WEB_VERSION=0.101.59` (TRMM v1.4.0)
+## Available themes
 
-## Redesign — ce qui change
+| Theme | Dark | Light | Description |
+|-------|------|-------|-------------|
+| **Dracula** | Neon purple `#BD93F9` | Alucard `#644AC8` | [Official Dracula palette](https://draculatheme.com) |
+| **Classic** | Quasar blue `#1976D2` | White/gray | Original TacticalRMM look |
+| **Nothing Phone** | Black + red `#FF0022` | Minimal white | Nothing OS aesthetic |
+| **Material Design** | MD3 dark `#D0BCFF` | MD3 light `#6750A4` | Material You, rounded corners |
+| **Terminal** | Green phosphor `#39FF14` | CRT amber `#0A6E0A` | Monospace, console style |
 
-| Zone | Changements |
-|------|-------------|
-| **Design system** | Tokens (radius, ombres, bordures), police Inter, variables CSS `--drac-*` |
-| **Header** | Gradient violet, badge version, boutons arrondis |
-| **Navigation (FileBar)** | Barre pill flottante avec hover violet |
-| **Login** | Carte glassmorphism, logo, gradient animé, formulaire dark, SSO redesigné |
-| **Dashboard** | Tabs modernisés, splitters stylisés, arbre clients avec hover |
-| **Sélecteur de thème** | 3 thèmes interchangeables dans User Preferences |
-| **Tables** | Bordures arrondies, headers uppercase, hover lignes, sticky amélioré |
-| **Modales** | Header card (plus de q-bar), ombres profondes, bordures violettes |
-| **Formulaires** | Inputs filled avec focus ring violet, boutons avec ombre |
-| **Composants globaux** | Menus, chips, tooltips, notifications, scrollbars |
+### Dark + Light mode
 
-## Aperçu couleurs
+Each theme has **two variants**:
 
-| Élément | Couleur Dracula |
-|---------|-----------------|
-| Primary (boutons, header) | Purple `#BD93F9` |
-| Secondary / Info | Cyan `#8BE9FD` |
-| Accent | Pink `#FF79C6` |
-| Background | `#282A36` |
-| Surfaces | `#21222C` / `#44475A` |
-| Succès | Green `#50FA7B` |
-| Erreurs | Red `#FF5555` |
-| Avertissements | Orange `#FFB86C` |
+- **UI Theme** (Preferences) → theme choice (`dracula`, `nothing`, etc.)
+- **Moon/sun toggle** (header) → switches dark/light **for the active theme**
 
-## Prérequis serveur
+## UI redesign
 
-- TacticalRMM installé (accès root ou sudo)
-- **Node.js 18+** et **npm**
+| Area | Changes |
+|------|---------|
+| **Design system** | Shared tokens, `--theme-*` variables, Quasar components |
+| **Header** | Theme-aware gradient, version badge |
+| **Navigation (FileBar)** | Floating pill bar |
+| **Login** | Glassmorphism card, dynamic logo, redesigned SSO |
+| **Dashboard** | Modernized tabs, splitters, client tree |
+| **Theme selector** | 5 themes × dark/light in User Preferences |
+| **Tables** | Rounded borders, uppercase headers, row hover, improved sticky |
+| **Modals** | Card header (no q-bar), deep shadows, themed borders |
+| **Forms** | Filled inputs with focus ring, buttons with shadow |
+| **Global components** | Menus, chips, tooltips, notifications, scrollbars |
+
+## Dracula preview (default theme)
+
+| Element | Dark | Light (Alucard) |
+|---------|------|-----------------|
+| Primary | `#BD93F9` | `#644AC8` |
+| Background | `#282A36` | `#FFFBEB` |
+| Accent | `#FF79C6` | `#A3144D` |
+
+## Server requirements
+
+- TacticalRMM installed (root or sudo access)
+- **Node.js 18+** and **npm**
 - **Git**
-- ~500 Mo d'espace disque libre pour le build
+- ~500 MB free disk space for the build
 
 ```bash
-# Vérifier Node.js
+# Check Node.js
 node --version   # >= 18
 npm --version
 ```
 
 ## Installation
 
-### 1. Cloner ce dépôt sur le serveur
+### 1. Clone this repo on the server
 
 ```bash
 sudo git clone https://github.com/PAPAMICA/tacticalrmm-theme.git /opt/tacticalrmm-theme
@@ -57,68 +67,62 @@ cd /opt/tacticalrmm-theme
 sudo chmod +x scripts/*.sh
 ```
 
-### 2. Appliquer les patches backend (requis pour le sélecteur de thème)
+### 2. Apply backend patches (required for theme selector)
 
 ```bash
 sudo ./scripts/apply-backend-patches.sh
 ```
 
-Ajoute le champ `ui_theme` en base de données et l'expose via l'API (`/core/dashinfo/`, `/accounts/users/ui/`).
+Adds the `ui_theme` database field and exposes it via the API (`/core/dashinfo/`, `/accounts/users/ui/`).
 
-Le script utilise automatiquement le virtualenv TacticalRMM (`/rmm/api/env/bin/python`).
+The script automatically uses the TacticalRMM virtualenv (`/rmm/api/env/bin/python`).
 
 ```bash
-# Si la détection échoue, spécifiez le venv manuellement :
+# If detection fails, specify the venv manually:
 sudo TRMM_VENV=/rmm/api/env ./scripts/apply-backend-patches.sh
 ```
 
-### 3. Appliquer le thème frontend
+### 3. Apply the frontend theme
 
 ```bash
 sudo ./scripts/apply-theme.sh
 ```
 
-Le script :
-1. Détecte `WEB_VERSION` depuis `/rmm/api/tacticalrmm/tacticalrmm/settings.py`
-2. Clone `tacticalrmm-web` au tag correspondant (`v0.101.59`)
-3. Applique les patches et copie la palette + favicon
-4. Exécute `quasar build`
-5. Déploie dans `/var/www/rmm/dist/` (préserve `env-config.js`)
-6. Recharge nginx
+The script:
+1. Detects `WEB_VERSION` from `/rmm/api/tacticalrmm/tacticalrmm/settings.py`
+2. Clones `tacticalrmm-web` at the matching tag (`v0.101.59`)
+3. Applies patches and copies the `themes/` folder
+4. Runs `quasar build`
+5. Deploys to `/var/www/rmm/dist/` (preserves `env-config.js`)
+6. Reloads nginx
 
-### 4. Changer de thème dans l'interface
+### 4. Change theme in the UI
 
 **Settings → Preferences → User Interface → UI Theme**
 
-| Thème | Description |
-|-------|-------------|
-| **Dracula** | Thème sombre violet (défaut) |
-| **Classic (TacticalRMM)** | Apparence originale TacticalRMM |
-| **Alucard (Light)** | Variante claire officielle Dracula |
+Then use the **dark mode toggle** in the header for the light or dark variant.
 
-Le choix est **sauvegardé par utilisateur** et appliqué instantanément sans rebuild.
+The choice is **saved per user** and applied instantly without a rebuild.
 
-> **Alucard** : désactivez le dark mode (toggle lune/soleil) pour un meilleur rendu.
+### 5. Hard refresh browser
 
-### 5. Hard refresh navigateur
+After deployment, clear the cache or use `Ctrl+Shift+R` to see the new theme.
 
-Après déploiement, videz le cache ou utilisez `Ctrl+Shift+R` pour voir le nouveau thème.
+## Reapply after TacticalRMM update
 
-## Réapplication après mise à jour TacticalRMM
-
-Chaque `./update.sh` écrase le frontend officiel. Relancez le thème ensuite :
+Each `./update.sh` overwrites the official frontend. Reapply the theme afterward:
 
 ```bash
-# Manuel
+# Manual
 sudo /opt/tacticalrmm-theme/scripts/post-update.sh
 
-# Ou directement
+# Or directly
 sudo /opt/tacticalrmm-theme/scripts/apply-theme.sh
 ```
 
-### Hook automatique (optionnel)
+### Automatic hook (optional)
 
-Ajoutez à la fin de votre script `update.sh` TacticalRMM :
+Add to the end of your TacticalRMM `update.sh` script:
 
 ```bash
 if [ -x /opt/tacticalrmm-theme/scripts/post-update.sh ]; then
@@ -126,147 +130,146 @@ if [ -x /opt/tacticalrmm-theme/scripts/post-update.sh ]; then
 fi
 ```
 
-`post-update.sh` ne rebuild que si `WEB_VERSION` a changé depuis la dernière application.
+`post-update.sh` only rebuilds if `WEB_VERSION` has changed since the last application.
 
-## Variables d'environnement
+## Environment variables
 
-| Variable | Défaut | Description |
-|----------|--------|-------------|
-| `TRMM_WEB_VERSION` | auto | Force une version (ex. `0.101.59`) |
-| `TRMM_SETTINGS` | `/rmm/api/tacticalrmm/tacticalrmm/settings.py` | Chemin settings Django |
-| `TRMM_DIST_PATH` | `/var/www/rmm/dist` | Destination du frontend |
-| `TRMM_BUILD_DIR` | `/tmp/tacticalrmm-web-dracula-build` | Répertoire de build temporaire |
-| `TRMM_WEB_REPO` | repo amidaware | URL du repo frontend |
-| `TRMM_VENV` | auto (`/rmm/api/env`) | Chemin du virtualenv Python Django |
-| `SKIP_NGINX_RELOAD` | `false` | Ne pas recharger nginx |
-| `DRY_RUN` | `false` | Build sans déploiement |
-| `FORCE` | `false` | Force rebuild dans post-update.sh |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `TRMM_WEB_VERSION` | auto | Force a version (e.g. `0.101.59`) |
+| `TRMM_SETTINGS` | `/rmm/api/tacticalrmm/tacticalrmm/settings.py` | Django settings path |
+| `TRMM_DIST_PATH` | `/var/www/rmm/dist` | Frontend destination |
+| `TRMM_BUILD_DIR` | `/tmp/tacticalrmm-web-dracula-build` | Temporary build directory |
+| `TRMM_WEB_REPO` | amidaware repo | Frontend repo URL |
+| `TRMM_VENV` | auto (`/rmm/api/env`) | Django Python virtualenv path |
+| `SKIP_NGINX_RELOAD` | `false` | Do not reload nginx |
+| `DRY_RUN` | `false` | Build without deploying |
+| `FORCE` | `false` | Force rebuild in post-update.sh |
 
-Exemple :
+Example:
 
 ```bash
 sudo TRMM_WEB_VERSION=0.101.59 ./scripts/apply-theme.sh
 ```
 
-## Rollback en cas de problème
+## Rollback if something goes wrong
 
-Oui. **`apply-theme.sh` sauvegarde automatiquement** le frontend existant avant déploiement :
+Yes. **`apply-theme.sh` automatically backs up** the existing frontend before deployment:
 
 ```
 /var/www/rmm/dist  →  /var/www/rmm/dist.bak.<timestamp>
 ```
 
-### Restaurer le frontend précédent (recommandé)
+### Restore previous frontend (recommended)
 
 ```bash
-# Restaurer la dernière sauvegarde
+# Restore the latest backup
 sudo /opt/tacticalrmm-theme/scripts/rollback-theme.sh
 
-# Lister toutes les sauvegardes disponibles
+# List all available backups
 sudo /opt/tacticalrmm-theme/scripts/rollback-theme.sh --list
 
-# Restaurer une sauvegarde précise
+# Restore a specific backup
 sudo /opt/tacticalrmm-theme/scripts/rollback-theme.sh --backup /var/www/rmm/dist.bak.1717180800
 ```
 
-Le script remet le contenu sauvegardé dans `/var/www/rmm/dist/` et recharge nginx.
+The script restores the backed-up content to `/var/www/rmm/dist/` and reloads nginx.
 
-### Restaurer le frontend officiel TacticalRMM
+### Restore official TacticalRMM frontend
 
-Si aucune sauvegarde n'est disponible (ou pour repartir proprement) :
+If no backup is available (or to start fresh):
 
 ```bash
 cd /rmm
 sudo ./update.sh
 ```
 
-Cela retélécharge et réinstalle le frontend officiel depuis amidaware.
+This re-downloads and reinstalls the official frontend from amidaware.
 
-## Préférences utilisateur recommandées
+## Recommended user preferences
 
-Dans **Settings → User Preferences**, ces valeurs s'alignent le mieux avec Dracula :
+In **Settings → User Preferences**, these values align best with Dracula:
 
-| Préférence | Valeur recommandée |
+| Preference | Recommended value |
 |------------|-------------------|
-| Dark mode | Activé |
+| Dark mode | Enabled |
 | Loading bar color | `purple` |
 | Dash info color | `info` |
 | Dash positive color | `positive` |
 | Dash negative color | `negative` |
 | Dash warning color | `warning` |
 
-Doc : [User Interface Preferences](https://docs.tacticalrmm.com/functions/user_ui/)
+Docs: [User Interface Preferences](https://docs.tacticalrmm.com/functions/user_ui/)
 
-## Structure du dépôt
+## Repository structure
 
 ```
 tacticalrmm-theme/
-├── palette/
-│   ├── dracula.sass           # Tokens design (radius, ombres)
-│   ├── themes.sass            # Variables CSS par thème (runtime)
-│   └── dracula-components.sass
-├── patches/                   # 14 patches frontend
-├── patches-backend/           # Patches Django + migration ui_theme
-├── frontend-src/              # Sources utilitaires (copiées via patches)
+├── themes/                    # Multi-theme pack (see themes/README.md)
+│   ├── manifest.json
+│   ├── index.sass
+│   ├── shared/
+│   ├── dracula/
+│   ├── classic/
+│   ├── nothing/
+│   ├── material/
+│   └── terminal/
+├── patches/                   # 14 frontend patches
+├── patches-backend/           # Django patches + ui_theme migration
+├── frontend-src/              # Utility sources (reference)
 ├── assets/favicon.ico
-├── scripts/
-│   ├── apply-theme.sh
-│   ├── apply-backend-patches.sh
-│   ├── post-update.sh
-│   ├── rollback-theme.sh
-│   └── fix-env-config.sh
-└── SUPPORTED_WEB_VERSION
+└── scripts/
 ```
 
-## Fichiers modifiés (upstream)
+## Modified files (upstream)
 
-| Patch | Fichier | Redesign |
-|-------|---------|----------|
-| 001 | `quasar.variables.sass` | Palette + border-radius Quasar |
+| Patch | File | Redesign |
+|-------|------|----------|
+| 001 | `quasar.variables.sass` | Palette + Quasar border-radius |
 | 002 | `app.sass` | Design system + Inter + themes |
-| 003 | `App.vue` | Tables, highlights, liens CSS vars |
-| 004 | `LoginView.vue` | Page login complète |
-| 005 | `MainLayout.vue` | Header gradient + badge version |
-| 006 | `FileBar.vue` | Navigation pill |
-| 007 | `DialogWrapper.vue` | Modales modernes |
-| 008 | `SubTableTabs.vue` | Tabs agent panel |
-| 009 | `DashboardView.vue` | Tabs serveurs/workstations |
-| 010 | `UserPreferences.vue` | **Sélecteur UI Theme** |
-| 011 | `store/index.js` | Application thème au chargement |
-| 012 | `quasar.config.js` | Boot file theme |
-| 013 | `utils/theme.js` | Logique changement de thème |
-| 014 | `boot/theme.js` | Thème par défaut au démarrage |
-| — | `themes.sass`, `dracula*.sass` | Copiés depuis `palette/` |
-| — | `public/favicon.ico` | Favicon Dracula |
+| 003 | `App.vue` | Tables, highlights, CSS var links |
+| 004 | `LoginView.vue` | Full login page |
+| 005 | `MainLayout.vue` | Header gradient + version badge |
+| 006 | `FileBar.vue` | Pill navigation |
+| 007 | `DialogWrapper.vue` | Modern modals |
+| 008 | `SubTableTabs.vue` | Agent panel tabs |
+| 009 | `DashboardView.vue` | Servers/workstations tabs |
+| 010 | `UserPreferences.vue` | **UI Theme selector** |
+| 011 | `store/index.js` | Apply theme on load |
+| 012 | `quasar.config.js` | Theme boot file |
+| 013 | `utils/theme.js` | Theme switching logic |
+| 014 | `boot/theme.js` | Default theme on startup |
+| — | `themes/` | Copied from this repo during build |
+| — | `public/favicon.ico` | Dracula favicon |
 
 ### Backend (patches-backend/)
 
-| Fichier | Changement |
-|---------|------------|
-| `accounts/models.py` | Champ `ui_theme` |
-| `accounts/serializers.py` | Exposé dans `UserUISerializer` |
-| `core/views.py` | Retourné par `/core/dashinfo/` |
-| `migrations/0041_user_ui_theme.py` | Migration Django |
+| File | Change |
+|------|--------|
+| `accounts/models.py` | `ui_theme` field |
+| `accounts/serializers.py` | Exposed in `UserUISerializer` |
+| `core/views.py` | Returned by `/core/dashinfo/` |
+| `migrations/0041_user_ui_theme.py` | Django migration |
 
 ## Limitations
 
-- **MeshCentral** (prise en main à distance) : UI séparée, non thématisée
-- **White labeling** : pas de support natif TacticalRMM — ce dépôt est un contournement
-- **Versions** : les patches ciblent `v0.101.59` ; une autre `WEB_VERSION` peut nécessiter une mise à jour des patches
-- **Mises à jour** : le thème doit être réappliqué après chaque `./update.sh`
+- **MeshCentral** (remote control): separate UI, not themed
+- **White labeling**: no native TacticalRMM support — this repo is a workaround
+- **Versions**: patches target `v0.101.59`; a different `WEB_VERSION` may require patch updates
+- **Updates**: the theme must be reapplied after each `./update.sh`
 
-## Dépannage
+## Troubleshooting
 
-### Migration backend — `ModuleNotFoundError: No module named 'django'`
+### Backend migration — `ModuleNotFoundError: No module named 'django'`
 
-TacticalRMM utilise le virtualenv `/rmm/api/env`, pas `venv`. Mettez à jour le script puis relancez :
+TacticalRMM uses the virtualenv `/rmm/api/env`, not `venv`. Update the script and rerun:
 
 ```bash
 cd /opt/tacticalrmm-theme && sudo git pull
 sudo ./scripts/apply-backend-patches.sh
 ```
 
-Ou manuellement :
+Or manually:
 
 ```bash
 cd /rmm/api/tacticalrmm
@@ -274,67 +277,67 @@ cd /rmm/api/tacticalrmm
 sudo systemctl restart rmm rmm-daphne rmmcelery rmmcelerybeat
 ```
 
-### Page blanche — `Unexpected token '<'` dans env-config.js
+### Blank page — `Unexpected token '<'` in env-config.js
 
-Le build Quasar **n'inclut pas** `env-config.js`. Ce fichier est créé par TacticalRMM à l'installation (`update.sh`) et contient l'URL de l'API :
+The Quasar build **does not include** `env-config.js`. This file is created by TacticalRMM during installation (`update.sh`) and contains the API URL:
 
 ```js
-window._env_ = {PROD_URL: "https://api.votredomaine.com"}
+window._env_ = {PROD_URL: "https://api.yourdomain.com"}
 ```
 
-Sans ce fichier, nginx renvoie `index.html` à la place → page blanche.
+Without this file, nginx returns `index.html` instead → blank page.
 
-**Correctif immédiat** (sur le serveur) :
+**Immediate fix** (on the server):
 
 ```bash
-# Option 1 : script de réparation
+# Option 1: repair script
 sudo /opt/tacticalrmm-theme/scripts/fix-env-config.sh
 
-# Option 2 : copier depuis la sauvegarde
+# Option 2: copy from backup
 sudo cp /var/www/rmm/dist.bak.*/env-config.js /var/www/rmm/dist/env-config.js
 
-# Option 3 : régénérer manuellement
+# Option 3: regenerate manually
 API=$(cd /rmm/api/tacticalrmm && python3 manage.py get_config api)
 echo "window._env_ = {PROD_URL: \"https://${API}\"}" | sudo tee /var/www/rmm/dist/env-config.js
 sudo chown www-data:www-data /var/www/rmm/dist/env-config.js
 ```
 
-Puis hard refresh navigateur (`Ctrl+Shift+R`).
+Then hard refresh the browser (`Ctrl+Shift+R`).
 
-Les versions récentes de `apply-theme.sh` préservent automatiquement `env-config.js` lors du déploiement.
+Recent versions of `apply-theme.sh` automatically preserve `env-config.js` during deployment.
 
-### Un patch ne s'applique pas
+### A patch fails to apply
 
 ```bash
-# Vérifier la WEB_VERSION du serveur
+# Check server WEB_VERSION
 grep WEB_VERSION /rmm/api/tacticalrmm/tacticalrmm/settings.py
 
-# Comparer avec SUPPORTED_WEB_VERSION de ce dépôt
+# Compare with this repo's SUPPORTED_WEB_VERSION
 cat SUPPORTED_WEB_VERSION
 ```
 
-Si les versions diffèrent, ouvrez une issue ou mettez à jour les patches pour la nouvelle version.
+If versions differ, open an issue or update the patches for the new version.
 
-### Build npm échoue
+### npm build fails
 
 ```bash
-node --version   # doit être >= 18
+node --version   # must be >= 18
 cd /tmp/tacticalrmm-web-dracula-build && npm ci && npx quasar build
 ```
 
-### Tester sans déployer
+### Test without deploying
 
 ```bash
 sudo DRY_RUN=true ./scripts/apply-theme.sh
-# Le build est effectué mais /var/www/rmm/dist n'est pas modifié
+# Build runs but /var/www/rmm/dist is not modified
 ```
 
-## Crédits
+## Credits
 
-- [Dracula Theme](https://draculatheme.com) — palette MIT
+- [Dracula Theme](https://draculatheme.com) — MIT palette
 - [TacticalRMM](https://github.com/amidaware/tacticalrmm) — amidaware
-- [tacticalrmm-web](https://github.com/amidaware/tacticalrmm-web) — frontend Quasar
+- [tacticalrmm-web](https://github.com/amidaware/tacticalrmm-web) — Quasar frontend
 
-## Licence
+## License
 
-MIT — voir [LICENSE.md](LICENSE.md)
+MIT — see [LICENSE.md](LICENSE.md)

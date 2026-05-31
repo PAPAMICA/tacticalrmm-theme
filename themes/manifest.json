@@ -1,0 +1,40 @@
+{
+  "default": "dracula",
+  "themes": [
+    {
+      "id": "dracula",
+      "label": "Dracula",
+      "description": "Palette officielle Dracula — violet, cyan et vert néon",
+      "supportsDark": true,
+      "supportsLight": true
+    },
+    {
+      "id": "classic",
+      "label": "Classic (TacticalRMM)",
+      "description": "Apparence originale TacticalRMM / Quasar",
+      "supportsDark": true,
+      "supportsLight": true
+    },
+    {
+      "id": "nothing",
+      "label": "Nothing Phone",
+      "description": "Monochrome minimaliste avec accent rouge Nothing OS",
+      "supportsDark": true,
+      "supportsLight": true
+    },
+    {
+      "id": "material",
+      "label": "Material Design",
+      "description": "Material Design 3 — surfaces tonales et coins arrondis",
+      "supportsDark": true,
+      "supportsLight": true
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal",
+      "description": "Esthétique console — monospace, phosphore vert/ambre",
+      "supportsDark": true,
+      "supportsLight": true
+    }
+  ]
+}

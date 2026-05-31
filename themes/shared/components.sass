@@ -1,0 +1,313 @@
+// Structural UI — uses --theme-* CSS variables from themes/{name}/dark|light.sass
+
+body.body--dark,
+body.body--light
+  font-family: var(--theme-font, "Inter", system-ui, sans-serif)
+  background: var(--theme-surface)
+  color: var(--theme-fg)
+
+  ::-webkit-scrollbar
+    width: 8px
+    height: 8px
+
+  ::-webkit-scrollbar-track
+    background: var(--theme-bg)
+
+  ::-webkit-scrollbar-thumb
+    background: var(--theme-muted)
+    border-radius: var(--theme-radius-sm, 6px)
+
+  ::-webkit-scrollbar-thumb:hover
+    background: var(--theme-primary)
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+.dracula-header
+  background: var(--theme-header-bg) !important
+  border-bottom: 1px solid var(--theme-border)
+  box-shadow: var(--theme-shadow-md, 0 8px 28px rgba(0, 0, 0, 0.38))
+
+  .q-toolbar
+    min-height: 56px
+    padding: 0 16px
+
+  .q-toolbar-title
+    font-weight: 600
+    letter-spacing: 0.02em
+
+  .q-btn.flat
+    border-radius: var(--theme-radius-sm, 6px)
+    transition: background var(--theme-transition, 0.18s ease)
+
+    &:hover
+      background: color-mix(in srgb, var(--theme-primary) 15%, transparent)
+
+  .q-chip
+    border-radius: var(--theme-radius-md, 10px)
+    font-weight: 500
+    border: 1px solid var(--theme-border)
+
+// ─── Navigation ──────────────────────────────────────────────────────────────
+.dracula-nav
+  background: var(--theme-nav-bg) !important
+  border: 1px solid var(--theme-border)
+  border-radius: var(--theme-radius-md, 10px)
+  margin: 8px 12px 0
+  padding: 4px 8px
+  min-height: 42px
+  box-shadow: var(--theme-shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.28))
+
+  .q-btn
+    border-radius: var(--theme-radius-sm, 6px)
+    font-weight: 500
+    padding: 4px 12px
+    transition: all var(--theme-transition, 0.18s ease)
+
+    &:hover
+      background: color-mix(in srgb, var(--theme-primary) 15%, transparent)
+      color: var(--theme-primary)
+
+// ─── Dashboard ───────────────────────────────────────────────────────────────
+.q-page
+  background: var(--theme-surface)
+
+.q-splitter
+  border-radius: var(--theme-radius-md, 10px)
+  overflow: hidden
+
+  .q-splitter__separator
+    background: var(--theme-surface-elevated)
+
+  .q-avatar
+    background: var(--theme-primary) !important
+
+.q-tree .q-tree__node--selected .q-tree__node-header
+  background: color-mix(in srgb, var(--theme-primary) 18%, transparent)
+  border-radius: var(--theme-radius-sm, 6px)
+
+.q-tree .q-tree__node-header:hover
+  background: color-mix(in srgb, var(--theme-muted) 20%, transparent)
+  border-radius: var(--theme-radius-sm, 6px)
+
+// ─── Tabs ────────────────────────────────────────────────────────────────────
+.dracula-subtabs,
+.q-tabs
+  background: var(--theme-surface-elevated)
+  border-bottom: 1px solid var(--theme-border)
+
+  .q-tab
+    border-radius: var(--theme-radius-sm, 6px) var(--theme-radius-sm, 6px) 0 0
+    font-weight: 500
+    min-height: 40px
+
+  .q-tab--active
+    background: color-mix(in srgb, var(--theme-primary) 12%, transparent)
+
+  .q-tab__indicator
+    height: 3px
+    background: var(--theme-primary)
+
+// ─── Tables ──────────────────────────────────────────────────────────────────
+.q-table
+  border-radius: var(--theme-radius-md, 10px)
+  overflow: hidden
+  border: 1px solid var(--theme-border)
+
+  thead tr th
+    font-weight: 600
+    letter-spacing: 0.04em
+    text-transform: uppercase
+    font-size: 0.72rem
+    color: var(--theme-muted)
+
+  tbody tr
+    transition: background var(--theme-transition, 0.18s ease)
+
+    &:hover:not(.selected)
+      background: color-mix(in srgb, var(--theme-muted) 12%, transparent) !important
+
+// ─── Cards & dialogs ─────────────────────────────────────────────────────────
+.q-card
+  border-radius: var(--theme-radius-lg, 16px)
+  border: 1px solid var(--theme-border)
+  box-shadow: var(--theme-shadow-md, 0 8px 28px rgba(0, 0, 0, 0.38))
+  background: var(--theme-surface-elevated)
+
+.dracula-dialog
+  border-radius: var(--theme-radius-lg, 16px) !important
+  overflow: hidden
+  border: 1px solid var(--theme-border) !important
+  box-shadow: var(--theme-shadow-lg, 0 16px 48px rgba(0, 0, 0, 0.45)) !important
+
+.dracula-dialog-header
+  background: color-mix(in srgb, var(--theme-primary) 12%, transparent)
+  padding: 14px 18px
+  font-weight: 600
+
+.dracula-dialog-body
+  background: var(--theme-surface-elevated)
+
+.q-bar
+  background: var(--theme-surface-elevated)
+  border-bottom: 1px solid var(--theme-border)
+  min-height: 44px
+  font-weight: 600
+
+// ─── Forms ───────────────────────────────────────────────────────────────────
+.q-field--filled .q-field__control
+  border-radius: var(--theme-radius-md, 10px)
+  background: var(--theme-bg)
+  border: 1px solid transparent
+  transition: border-color var(--theme-transition, 0.18s ease), box-shadow var(--theme-transition, 0.18s ease)
+
+.q-field--filled.q-field--focused .q-field__control
+  border-color: color-mix(in srgb, var(--theme-primary) 60%, transparent)
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primary) 15%, transparent)
+
+.q-btn
+  border-radius: var(--theme-radius-sm, 6px)
+  font-weight: 500
+  transition: all var(--theme-transition, 0.18s ease)
+
+// ─── Menus ───────────────────────────────────────────────────────────────────
+.q-menu
+  border-radius: var(--theme-radius-md, 10px)
+  border: 1px solid var(--theme-border)
+  box-shadow: var(--theme-shadow-md, 0 8px 28px rgba(0, 0, 0, 0.38))
+  background: var(--theme-surface-elevated)
+
+  .q-item
+    border-radius: var(--theme-radius-sm, 6px)
+    margin: 2px 6px
+
+  .q-item:hover
+    background: color-mix(in srgb, var(--theme-primary) 12%, transparent)
+
+// ─── Login ───────────────────────────────────────────────────────────────────
+.dracula-login-page
+  position: relative
+  overflow: hidden
+  min-height: 100vh
+
+.dracula-login-bg
+  position: absolute
+  inset: 0
+  background: var(--theme-login-bg)
+  z-index: 0
+
+.dracula-login-card
+  position: relative
+  z-index: 1
+  width: 100%
+  max-width: 420px
+  background: var(--theme-login-card-bg) !important
+  backdrop-filter: blur(16px)
+  border: 1px solid var(--theme-login-card-border) !important
+  border-radius: var(--theme-radius-xl, 20px) !important
+  box-shadow: var(--theme-shadow-lg, 0 16px 48px rgba(0, 0, 0, 0.45)) !important
+
+.dracula-login-logo
+  width: 72px
+  height: 72px
+  margin: 0 auto
+  border-radius: 50%
+  background: var(--theme-logo-gradient)
+  display: flex
+  align-items: center
+  justify-content: center
+  font-size: 2rem
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--theme-primary) 40%, transparent)
+
+.dracula-login-subtitle
+  color: var(--theme-muted)
+  letter-spacing: 0.12em
+  text-transform: uppercase
+  font-size: 0.7rem
+  font-weight: 600
+
+.dracula-login-btn
+  border-radius: var(--theme-radius-md, 10px) !important
+  padding: 12px 0 !important
+  font-weight: 600 !important
+  letter-spacing: 0.04em
+  text-transform: uppercase
+  font-size: 0.85rem
+
+.dracula-sso-item
+  border-radius: var(--theme-radius-sm, 6px)
+  transition: background var(--theme-transition, 0.18s ease)
+
+  &:hover
+    background: color-mix(in srgb, var(--theme-primary) 12%, transparent)
+
+.dracula-2fa-card
+  border-radius: var(--theme-radius-lg, 16px) !important
+  border: 1px solid var(--theme-login-card-border) !important
+
+.q-notification
+  border-radius: var(--theme-radius-md, 10px)
+  border: 1px solid var(--theme-border)
+  box-shadow: var(--theme-shadow-md, 0 8px 28px rgba(0, 0, 0, 0.38))
+
+// ─── Theme-specific overrides ────────────────────────────────────────────────
+body.theme-classic
+  .dracula-nav
+    margin: 0
+    border-radius: 0
+    box-shadow: none
+
+  .dracula-login-card
+    backdrop-filter: none
+
+body.theme-nothing
+  .dracula-header
+    border-bottom: 2px solid var(--theme-primary)
+
+  .dracula-nav
+    border-radius: 0
+    letter-spacing: 0.05em
+
+  .q-btn
+    text-transform: uppercase
+    letter-spacing: 0.08em
+
+  .dracula-login-logo
+    border-radius: 0
+
+body.theme-material
+  .q-card,
+  .dracula-login-card,
+  .dracula-dialog
+    border-radius: 28px !important
+
+  .q-btn
+    border-radius: 20px !important
+
+  .dracula-nav
+    border-radius: 16px
+
+body.theme-terminal
+  font-family: var(--theme-font) !important
+
+  .dracula-header,
+  .dracula-nav,
+  .q-table,
+  .q-card,
+  .q-field__native,
+  .q-item__label
+    font-family: var(--theme-font) !important
+
+  .dracula-login-card
+    border-radius: 0 !important
+    backdrop-filter: none
+
+  .dracula-login-logo
+    border-radius: 0
+    font-family: var(--theme-font)
+
+  .q-table thead tr th
+    text-transform: lowercase
+    font-family: var(--theme-font)
+
+  .dracula-nav,
+  .q-card
+    border-radius: 0 !important

@@ -1,9 +1,17 @@
-export const UI_THEMES = ["dracula", "classic", "alucard"];
+export const UI_THEMES = [
+  "dracula",
+  "classic",
+  "nothing",
+  "material",
+  "terminal",
+];
 
 export const UI_THEME_OPTIONS = [
-  { label: "Dracula", value: "dracula" },
-  { label: "Classic (TacticalRMM)", value: "classic" },
-  { label: "Alucard (Light)", value: "alucard" },
+  { label: "Dracula", value: "dracula", description: "Violet néon — dark & light (Alucard)" },
+  { label: "Classic (TacticalRMM)", value: "classic", description: "Apparence originale Quasar" },
+  { label: "Nothing Phone", value: "nothing", description: "Monochrome + accent rouge" },
+  { label: "Material Design", value: "material", description: "Material Design 3" },
+  { label: "Terminal", value: "terminal", description: "Console monospace phosphore" },
 ];
 
 export function applyTheme(theme) {

@@ -1,8 +1,8 @@
 diff --git a/src/components/modals/coresettings/UserPreferences.vue b/src/components/modals/coresettings/UserPreferences.vue
-index 81e7d91..6559c6f 100644
+index 81e7d91..2e63168 100644
 --- a/src/components/modals/coresettings/UserPreferences.vue
 +++ b/src/components/modals/coresettings/UserPreferences.vue
-@@ -70,6 +70,20 @@
+@@ -70,6 +70,25 @@
                      class="col-4"
                    />
                  </q-card-section>
@@ -20,10 +20,15 @@ index 81e7d91..6559c6f 100644
 +                    class="col-4"
 +                  />
 +                </q-card-section>
++                <q-card-section class="q-px-md q-pt-none">
++                  <div class="text-caption text-grey-6">
++                    Each theme supports dark and light mode — use the moon/sun toggle in the header.
++                  </div>
++                </q-card-section>
                  <q-card-section class="row">
                    <div class="col-4">Loading Bar Color:</div>
                    <div class="col-4"></div>
-@@ -233,6 +247,7 @@
+@@ -233,6 +252,7 @@
  import { openURL } from "quasar";
  import { loadingBarColors } from "@/mixins/data";
  import mixins from "@/mixins/mixins";
@@ -31,7 +36,7 @@ index 81e7d91..6559c6f 100644
  
  export default {
    name: "UserPreferences",
-@@ -241,6 +256,7 @@ export default {
+@@ -241,6 +261,7 @@ export default {
    data() {
      return {
        loadingBarColors,
@@ -39,7 +44,7 @@ index 81e7d91..6559c6f 100644
        agentDblClickAction: "",
        defaultAgentTblTab: "",
        clientTreeSort: "",
-@@ -248,6 +264,7 @@ export default {
+@@ -248,6 +269,7 @@ export default {
        tab: "ui",
        splitterModel: 20,
        loading_bar_color: "",
@@ -47,7 +52,7 @@ index 81e7d91..6559c6f 100644
        dash_info_color: "",
        dash_positive_color: "",
        dash_negative_color: "",
-@@ -335,6 +352,7 @@ export default {
+@@ -335,6 +357,7 @@ export default {
          this.defaultAgentTblTab = r.data.default_agent_tbl_tab;
          this.clientTreeSort = r.data.client_tree_sort;
          this.loading_bar_color = r.data.loading_bar_color;
@@ -55,7 +60,7 @@ index 81e7d91..6559c6f 100644
          this.dash_info_color = r.data.dash_info_color;
          this.dash_positive_color = r.data.dash_positive_color;
          this.dash_negative_color = r.data.dash_negative_color;
-@@ -357,6 +375,7 @@ export default {
+@@ -357,6 +380,7 @@ export default {
          default_agent_tbl_tab: this.defaultAgentTblTab,
          client_tree_sort: this.clientTreeSort,
          loading_bar_color: this.loading_bar_color,
@@ -63,7 +68,7 @@ index 81e7d91..6559c6f 100644
          dash_info_color: this.dash_info_color,
          dash_positive_color: this.dash_positive_color,
          dash_negative_color: this.dash_negative_color,
-@@ -365,6 +384,7 @@ export default {
+@@ -365,6 +389,7 @@ export default {
          date_format: this.date_format,
        };
        this.$axios.patch("/accounts/users/ui/", data).then(() => {

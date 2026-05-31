@@ -1,5 +1,5 @@
 diff --git a/src/views/LoginView.vue b/src/views/LoginView.vue
-index 244fde0..d946206 100644
+index 244fde0..9c56ec4 100644
 --- a/src/views/LoginView.vue
 +++ b/src/views/LoginView.vue
 @@ -1,21 +1,29 @@
@@ -23,7 +23,7 @@ index 244fde0..d946206 100644
 +            <div class="text-h4 text-weight-bold text-primary q-mt-lg">
 +              Tactical RMM
              </div>
-+            <div class="dracula-login-subtitle q-mt-sm">Dracula Edition</div>
++            <div class="dracula-login-subtitle q-mt-sm">Remote Monitoring & Management</div>
            </q-card-section>
 -          <q-card-section>
 +
