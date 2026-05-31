@@ -1,6 +1,6 @@
 # TacticalRMM — Multi-Theme Pack
 
-UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) frontend: full redesign, **5 themes** with **dark + light** variants, instant switching in User Preferences.
+UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) frontend: full redesign, **8 themes** with **dark + light** variants, instant switching in User Preferences.
 
 **Tested TacticalRMM version:** `WEB_VERSION=0.101.59` (TRMM v1.4.0)
 
@@ -8,11 +8,14 @@ UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) fr
 
 | Theme | Dark | Light | Description |
 |-------|------|-------|-------------|
-| **Dracula** | Neon purple `#BD93F9` | Alucard `#644AC8` | [Official Dracula palette](https://draculatheme.com) |
+| **Dracula** | Neon purple `#BD93F9` | Soft lavender `#644AC8` | [Official Dracula palette](https://draculatheme.com) |
 | **Classic** | Quasar blue `#1976D2` | White/gray | Original TacticalRMM look |
-| **Nothing Phone** | Black + red `#FF0022` | Minimal white | Nothing OS aesthetic |
-| **Material Design** | MD3 dark `#D0BCFF` | MD3 light `#6750A4` | Material You, rounded corners |
-| **Terminal** | Green phosphor `#39FF14` | CRT amber `#0A6E0A` | Monospace, console style |
+| **Nothing OS** | Black `#0E0E0E` | White `#F5F5F5` | Monochrome industrial — Space Grotesk |
+| **Cyber Dashboard** | Cyan glow `#00E5FF` | Blue `#0066FF` | NOC/SOC — Grafana-inspired |
+| **Apple Vision Pro** | Glass dark | Frosted white | Premium spatial UI, 24px radius |
+| **Swiss Enterprise** | Dark gray + red | White + red `#E30613` | Banking precision — IBM Plex Sans |
+| **Terminal SRE** | GitHub dark `#3FB950` | Paper white + green | Engineer dashboard — JetBrains Mono |
+| **Neo Minimal SaaS** | Charcoal | Warm white | Linear/Stripe-inspired spacious UI |
 
 ### Dark + Light mode
 
@@ -30,7 +33,7 @@ Each theme has **two variants**:
 | **Navigation (FileBar)** | Floating pill bar |
 | **Login** | Glassmorphism card, dynamic logo, redesigned SSO |
 | **Dashboard** | Modernized tabs, splitters, client tree |
-| **Theme selector** | 5 themes × dark/light in User Preferences |
+| **Theme selector** | 8 themes × dark/light in User Preferences |
 | **Tables** | Rounded borders, uppercase headers, row hover, improved sticky |
 | **Modals** | Card header (no q-bar), deep shadows, themed borders |
 | **Forms** | Filled inputs with focus ring, buttons with shadow |
@@ -38,10 +41,10 @@ Each theme has **two variants**:
 
 ## Dracula preview (default theme)
 
-| Element | Dark | Light (Alucard) |
-|---------|------|-----------------|
+| Element | Dark | Light |
+|---------|------|-------|
 | Primary | `#BD93F9` | `#644AC8` |
-| Background | `#282A36` | `#FFFBEB` |
+| Background | `#282A36` | `#F6F5FA` |
 | Accent | `#FF79C6` | `#A3144D` |
 
 ## Server requirements
@@ -212,8 +215,11 @@ tacticalrmm-theme/
 │   ├── dracula/
 │   ├── classic/
 │   ├── nothing/
-│   ├── material/
-│   └── terminal/
+│   ├── cyber/
+│   ├── vision/
+│   ├── swiss/
+│   ├── terminal/
+│   └── neo/
 ├── patches/                   # 14 frontend patches
 ├── patches-backend/           # Django patches + ui_theme migration
 ├── frontend-src/              # Utility sources (reference)

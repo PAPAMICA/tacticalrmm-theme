@@ -4,35 +4,56 @@
     {
       "id": "dracula",
       "label": "Dracula",
-      "description": "Palette officielle Dracula — violet, cyan et vert néon",
+      "description": "Official Dracula palette — neon purple, cyan and green",
       "supportsDark": true,
       "supportsLight": true
     },
     {
       "id": "classic",
       "label": "Classic (TacticalRMM)",
-      "description": "Apparence originale TacticalRMM / Quasar",
+      "description": "Original TacticalRMM / Quasar appearance",
       "supportsDark": true,
       "supportsLight": true
     },
     {
       "id": "nothing",
-      "label": "Nothing Phone",
-      "description": "Monochrome minimaliste avec accent rouge Nothing OS",
+      "label": "Nothing OS",
+      "description": "Minimalist monochrome — industrial, dot-matrix inspired",
       "supportsDark": true,
       "supportsLight": true
     },
     {
-      "id": "material",
-      "label": "Material Design",
-      "description": "Material Design 3 — surfaces tonales et coins arrondis",
+      "id": "cyber",
+      "label": "Cyber Dashboard",
+      "description": "Futuristic NOC/SOC — datacenter, Grafana-inspired",
+      "supportsDark": true,
+      "supportsLight": true
+    },
+    {
+      "id": "vision",
+      "label": "Apple Vision Pro",
+      "description": "Ultra-premium glass UI — frosted panels, spatial depth",
+      "supportsDark": true,
+      "supportsLight": true
+    },
+    {
+      "id": "swiss",
+      "label": "Swiss Enterprise",
+      "description": "Swiss banking precision — dense, professional, red accent",
       "supportsDark": true,
       "supportsLight": true
     },
     {
       "id": "terminal",
-      "label": "Terminal",
-      "description": "Esthétique console — monospace, phosphore vert/ambre",
+      "label": "Terminal SRE",
+      "description": "Engineer-first — GitHub dark, observability green",
+      "supportsDark": true,
+      "supportsLight": true
+    },
+    {
+      "id": "neo",
+      "label": "Neo Minimal SaaS",
+      "description": "Next-gen SaaS — spacious, Linear/Stripe-inspired",
       "supportsDark": true,
       "supportsLight": true
     }

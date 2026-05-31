@@ -12,13 +12,13 @@ themes/
 │   ├── design-tokens.sass # Radius, shadows (non-color)
 │   └── components.sass    # Structural UI using --theme-* vars
 ├── dracula/
-│   ├── theme.json
-│   ├── dark.sass          # body.theme-dracula.body--dark
-│   └── light.sass         # body.theme-dracula.body--light (Alucard)
 ├── classic/
-├── nothing/
-├── material/
-└── terminal/
+├── nothing/               # Nothing OS — monochrome industrial
+├── cyber/                 # Cyber Dashboard — NOC/SOC
+├── vision/                # Apple Vision Pro — frosted glass
+├── swiss/                 # Swiss Enterprise — banking precision
+├── terminal/              # Terminal SRE — engineer dashboard
+└── neo/                   # Neo Minimal SaaS — Linear-inspired
 ```
 
 ## How switching works
@@ -34,7 +34,7 @@ Each theme defines CSS variables under both `.body--dark` and `.body--light`.
 2. Create `themes/mytheme/index.sass` importing both
 3. Add `@import "mytheme/index.sass"` to `themes/index.sass`
 4. Register in `themes/manifest.json` and `frontend-src/utils/theme.js`
-5. Optional: theme-specific overrides in `shared/components.sass`
+5. Add theme-specific overrides in `shared/components.sass`
 
 ## CSS variable reference
 
@@ -47,5 +47,23 @@ All themes must define:
 - `--theme-link`, `--theme-link-hover`
 - `--theme-header-bg`, `--theme-login-bg`, `--theme-login-card-bg`
 - `--theme-nav-bg`, `--theme-table-header-bg`, `--theme-highlight`
-- `--theme-font`, `--theme-logo-gradient`
+- `--theme-font`, `--theme-font-mono`, `--theme-logo-gradient`
+- `--theme-radius-sm` … `--theme-radius-xl` (optional per theme)
+- `--theme-shadow-sm` … `--theme-shadow-lg` (optional per theme)
+- `--theme-transition`, `--theme-glass-blur`, `--theme-accent-glow` (optional)
 - `--q-primary` … `--q-dark-page` (Quasar compatibility)
+
+## Theme IDs
+
+| ID | Label |
+|----|-------|
+| `dracula` | Dracula |
+| `classic` | Classic (TacticalRMM) |
+| `nothing` | Nothing OS |
+| `cyber` | Cyber Dashboard |
+| `vision` | Apple Vision Pro |
+| `swiss` | Swiss Enterprise |
+| `terminal` | Terminal SRE |
+| `neo` | Neo Minimal SaaS |
+
+Legacy `material` and `alucard` values fall back to `dracula`.
