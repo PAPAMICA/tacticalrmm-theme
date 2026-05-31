@@ -115,6 +115,8 @@ deploy_dist() {
   if [[ -d "${TRMM_DIST_PATH}" ]]; then
     log "Sauvegarde de ${TRMM_DIST_PATH} → ${backup}"
     mv "${TRMM_DIST_PATH}" "${backup}"
+    mkdir -p "${THEME_DIR}/.state"
+    echo "${backup}" > "${THEME_DIR}/.state/last-backup"
   fi
 
   mkdir -p "${TRMM_DIST_PATH}"

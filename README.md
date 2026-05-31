@@ -103,6 +103,40 @@ Exemple :
 sudo TRMM_WEB_VERSION=0.101.59 ./scripts/apply-theme.sh
 ```
 
+## Rollback en cas de problème
+
+Oui. **`apply-theme.sh` sauvegarde automatiquement** le frontend existant avant déploiement :
+
+```
+/var/www/rmm/dist  →  /var/www/rmm/dist.bak.<timestamp>
+```
+
+### Restaurer le frontend précédent (recommandé)
+
+```bash
+# Restaurer la dernière sauvegarde
+sudo /opt/tacticalrmm-theme/scripts/rollback-theme.sh
+
+# Lister toutes les sauvegardes disponibles
+sudo /opt/tacticalrmm-theme/scripts/rollback-theme.sh --list
+
+# Restaurer une sauvegarde précise
+sudo /opt/tacticalrmm-theme/scripts/rollback-theme.sh --backup /var/www/rmm/dist.bak.1717180800
+```
+
+Le script remet le contenu sauvegardé dans `/var/www/rmm/dist/` et recharge nginx.
+
+### Restaurer le frontend officiel TacticalRMM
+
+Si aucune sauvegarde n'est disponible (ou pour repartir proprement) :
+
+```bash
+cd /rmm
+sudo ./update.sh
+```
+
+Cela retélécharge et réinstalle le frontend officiel depuis amidaware.
+
 ## Préférences utilisateur recommandées
 
 Dans **Settings → User Preferences**, ces valeurs s'alignent le mieux avec Dracula :
@@ -127,7 +161,8 @@ tacticalrmm-theme/
 ├── assets/favicon.ico         # Favicon Dracula
 ├── scripts/
 │   ├── apply-theme.sh         # Script principal
-│   └── post-update.sh         # Hook post-update
+│   ├── post-update.sh         # Hook post-update
+│   └── rollback-theme.sh      # Restauration depuis sauvegarde
 └── SUPPORTED_WEB_VERSION      # Version WEB testée
 ```
 
