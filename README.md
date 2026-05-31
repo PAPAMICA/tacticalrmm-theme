@@ -65,6 +65,13 @@ sudo ./scripts/apply-backend-patches.sh
 
 Ajoute le champ `ui_theme` en base de données et l'expose via l'API (`/core/dashinfo/`, `/accounts/users/ui/`).
 
+Le script utilise automatiquement le virtualenv TacticalRMM (`/rmm/api/env/bin/python`).
+
+```bash
+# Si la détection échoue, spécifiez le venv manuellement :
+sudo TRMM_VENV=/rmm/api/env ./scripts/apply-backend-patches.sh
+```
+
 ### 3. Appliquer le thème frontend
 
 ```bash
@@ -130,6 +137,7 @@ fi
 | `TRMM_DIST_PATH` | `/var/www/rmm/dist` | Destination du frontend |
 | `TRMM_BUILD_DIR` | `/tmp/tacticalrmm-web-dracula-build` | Répertoire de build temporaire |
 | `TRMM_WEB_REPO` | repo amidaware | URL du repo frontend |
+| `TRMM_VENV` | auto (`/rmm/api/env`) | Chemin du virtualenv Python Django |
 | `SKIP_NGINX_RELOAD` | `false` | Ne pas recharger nginx |
 | `DRY_RUN` | `false` | Build sans déploiement |
 | `FORCE` | `false` | Force rebuild dans post-update.sh |
@@ -248,6 +256,23 @@ tacticalrmm-theme/
 - **Mises à jour** : le thème doit être réappliqué après chaque `./update.sh`
 
 ## Dépannage
+
+### Migration backend — `ModuleNotFoundError: No module named 'django'`
+
+TacticalRMM utilise le virtualenv `/rmm/api/env`, pas `venv`. Mettez à jour le script puis relancez :
+
+```bash
+cd /opt/tacticalrmm-theme && sudo git pull
+sudo ./scripts/apply-backend-patches.sh
+```
+
+Ou manuellement :
+
+```bash
+cd /rmm/api/tacticalrmm
+/rmm/api/env/bin/python manage.py migrate accounts --noinput
+sudo systemctl restart rmm rmm-daphne rmmcelery rmmcelerybeat
+```
 
 ### Page blanche — `Unexpected token '<'` dans env-config.js
 
