@@ -1,0 +1,142 @@
+// Dashboard shell — mirrors home.html structure:
+// q-page.dracula-dashboard > FileBar.dracula-nav > q-splitter > sidebar + content panels
+
+.q-page-container
+  background: var(--theme-bg)
+
+// ─── Dashboard page ──────────────────────────────────────────────────────────
+.dracula-dashboard
+  position: relative
+  background: var(--theme-bg)
+  padding: var(--theme-dash-padding, 12px 16px 16px)
+  min-height: 100%
+  isolation: isolate
+
+  &::before
+    content: ""
+    position: absolute
+    inset: 0
+    background: var(--theme-page-decoration, none)
+    background-size: var(--theme-page-decoration-size, auto)
+    pointer-events: none
+    z-index: 0
+
+  > *
+    position: relative
+    z-index: 1
+
+  > .q-pb-sm
+    margin-bottom: var(--theme-nav-gap, 12px)
+
+// ─── Splitter panels (client tree + main content) ────────────────────────────
+.dracula-dashboard .q-splitter
+  background: transparent !important
+  border: none
+  box-shadow: none
+
+  .q-splitter__panel
+    background: var(--theme-panel-bg, var(--theme-surface-elevated))
+    border: 1px solid var(--theme-border)
+    border-radius: var(--theme-radius-lg, 12px)
+    overflow: hidden
+    box-shadow: var(--theme-shadow-sm)
+    transition: box-shadow var(--theme-transition, 0.18s ease)
+
+  .q-splitter__separator
+    background: transparent
+    width: var(--theme-splitter-gap, 12px) !important
+
+    .q-splitter__separator-area
+      background: transparent
+
+      &::before
+        background: var(--theme-border)
+        opacity: 0.5
+        border-radius: 2px
+
+// Sidebar panel (client tree)
+.dracula-dashboard .q-splitter--vertical > .q-splitter__panel.q-splitter__before
+  background: var(--theme-sidebar-bg, var(--theme-panel-bg, var(--theme-surface)))
+
+  .scroll
+    padding: 8px !important
+
+// ─── Sidebar list (All Clients, etc.) ────────────────────────────────────────
+.dracula-dashboard .q-list
+  padding: 4px
+
+  .q-item
+    border-radius: var(--theme-radius-sm, 6px)
+    margin-bottom: 2px
+    min-height: 36px
+    transition: background var(--theme-transition, 0.18s ease)
+
+    &:hover
+      background: color-mix(in srgb, var(--theme-primary) 10%, transparent)
+
+  .q-item--active,
+  .q-router-link--active
+    background: color-mix(in srgb, var(--theme-primary) 18%, transparent) !important
+    font-weight: 600
+
+    .q-icon
+      color: var(--theme-primary)
+
+// ─── Client tree ─────────────────────────────────────────────────────────────
+.dracula-dashboard .q-tree
+  padding: 4px 0
+
+  .q-tree__node-header
+    border-radius: var(--theme-radius-sm, 6px)
+    min-height: 32px
+    margin: 1px 0
+    transition: background var(--theme-transition, 0.18s ease)
+
+  .q-tree__node--selected .q-tree__node-header
+    background: color-mix(in srgb, var(--theme-primary) 20%, transparent)
+    font-weight: 600
+
+  .q-tree__arrow
+    color: var(--theme-muted)
+    font-size: 1.1rem
+
+// ─── Content area tabs + table zone ──────────────────────────────────────────
+.dracula-dashboard .dracula-subtabs
+  background: var(--theme-panel-bg, var(--theme-surface-elevated))
+  border-bottom: 1px solid var(--theme-border)
+  padding: 0 8px
+
+  .q-tab
+    min-height: 42px
+    font-weight: 600
+    opacity: 0.7
+
+  .q-tab--active
+    opacity: 1
+    color: var(--theme-primary) !important
+
+// ─── Filter / toolbar row above tables ───────────────────────────────────────
+.dracula-dashboard .q-table__top
+  padding: 10px 14px
+  border-bottom: 1px solid var(--theme-border)
+  background: var(--theme-table-toolbar-bg, transparent)
+
+.dracula-dashboard .q-table__container
+  border-radius: var(--theme-radius-md, 10px)
+  overflow: hidden
+  border: 1px solid var(--theme-border)
+  background: var(--theme-panel-bg, var(--theme-surface-elevated))
+
+// ─── Status chips in header ──────────────────────────────────────────────────
+.dracula-header
+  .q-chip
+    backdrop-filter: blur(8px)
+    font-size: 0.75rem
+
+  .q-badge
+    font-weight: 500
+    letter-spacing: 0.03em
+
+// ─── Page background on non-dashboard routes ─────────────────────────────────
+.q-page:not(.dracula-dashboard)
+  background: var(--theme-bg)

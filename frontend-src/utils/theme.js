@@ -1,23 +1,17 @@
 export const UI_THEMES = [
   "dracula",
   "classic",
-  "nothing",
   "cyber",
-  "vision",
   "swiss",
   "terminal",
-  "neo",
 ];
 
 export const UI_THEME_OPTIONS = [
   { label: "Dracula", value: "dracula", description: "Neon purple — dark & light" },
   { label: "Classic (TacticalRMM)", value: "classic", description: "Original Quasar appearance" },
-  { label: "Nothing OS", value: "nothing", description: "Monochrome minimalist — industrial design" },
   { label: "Cyber Dashboard", value: "cyber", description: "NOC/SOC — cyan glow, technical panels" },
-  { label: "Apple Vision Pro", value: "vision", description: "Premium glass — frosted panels, soft depth" },
   { label: "Swiss Enterprise", value: "swiss", description: "Banking precision — dense, red accent" },
   { label: "Terminal SRE", value: "terminal", description: "Engineer dashboard — GitHub green terminal" },
-  { label: "Neo Minimal SaaS", value: "neo", description: "Modern SaaS — spacious, Linear-inspired" },
 ];
 
 export function applyTheme(theme) {

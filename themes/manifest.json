@@ -16,23 +16,9 @@
       "supportsLight": true
     },
     {
-      "id": "nothing",
-      "label": "Nothing OS",
-      "description": "Minimalist monochrome — industrial, dot-matrix inspired",
-      "supportsDark": true,
-      "supportsLight": true
-    },
-    {
       "id": "cyber",
       "label": "Cyber Dashboard",
       "description": "Futuristic NOC/SOC — datacenter, Grafana-inspired",
-      "supportsDark": true,
-      "supportsLight": true
-    },
-    {
-      "id": "vision",
-      "label": "Apple Vision Pro",
-      "description": "Ultra-premium glass UI — frosted panels, spatial depth",
       "supportsDark": true,
       "supportsLight": true
     },
@@ -47,13 +33,6 @@
       "id": "terminal",
       "label": "Terminal SRE",
       "description": "Engineer-first — GitHub dark, observability green",
-      "supportsDark": true,
-      "supportsLight": true
-    },
-    {
-      "id": "neo",
-      "label": "Neo Minimal SaaS",
-      "description": "Next-gen SaaS — spacious, Linear/Stripe-inspired",
       "supportsDark": true,
       "supportsLight": true
     }

@@ -40,7 +40,7 @@ index ea79c71..17dba0e 100644
  
  .highlight
 -  background-color: #c9e6ff
-+  background-color: rgba(98, 114, 164, 0.35)
++  background-color: var(--theme-highlight, rgba(189, 147, 249, 0.15))
  
  .highlight-dark
 -  background-color: #404040

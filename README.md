@@ -1,6 +1,6 @@
 # TacticalRMM — Multi-Theme Pack
 
-UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) frontend: full redesign, **8 themes** with **dark + light** variants, instant switching in User Preferences.
+UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) frontend: full redesign, **5 themes** with **dark + light** variants, instant switching in User Preferences.
 
 **Tested TacticalRMM version:** `WEB_VERSION=0.101.59` (TRMM v1.4.0)
 
@@ -10,12 +10,9 @@ UI theme pack for the [TacticalRMM](https://github.com/amidaware/tacticalrmm) fr
 |-------|------|-------|-------------|
 | **Dracula** | Neon purple `#BD93F9` | Soft lavender `#644AC8` | [Official Dracula palette](https://draculatheme.com) |
 | **Classic** | Quasar blue `#1976D2` | White/gray | Original TacticalRMM look |
-| **Nothing OS** | Black `#0E0E0E` | White `#F5F5F5` | Monochrome industrial — Space Grotesk |
-| **Cyber Dashboard** | Cyan glow `#00E5FF` | Blue `#0066FF` | NOC/SOC — Grafana-inspired |
-| **Apple Vision Pro** | Glass dark | Frosted white | Premium spatial UI, 24px radius |
+| **Cyber Dashboard** | Cyan glow `#00E5FF` | Blue `#0066FF` | NOC/SOC — Grafana-inspired grid |
 | **Swiss Enterprise** | Dark gray + red | White + red `#E30613` | Banking precision — IBM Plex Sans |
 | **Terminal SRE** | GitHub dark `#3FB950` | Paper white + green | Engineer dashboard — JetBrains Mono |
-| **Neo Minimal SaaS** | Charcoal | Warm white | Linear/Stripe-inspired spacious UI |
 
 ### Dark + Light mode
 
@@ -32,8 +29,8 @@ Each theme has **two variants**:
 | **Header** | Theme-aware gradient, version badge |
 | **Navigation (FileBar)** | Floating pill bar |
 | **Login** | Glassmorphism card, dynamic logo, redesigned SSO |
-| **Dashboard** | Modernized tabs, splitters, client tree |
-| **Theme selector** | 8 themes × dark/light in User Preferences |
+| **Dashboard** | Floating panels, sidebar, client tree — layout changes per theme |
+| **Theme selector** | 5 themes × dark/light in User Preferences |
 | **Tables** | Rounded borders, uppercase headers, row hover, improved sticky |
 | **Modals** | Card header (no q-bar), deep shadows, themed borders |
 | **Forms** | Filled inputs with focus ring, buttons with shadow |
@@ -214,12 +211,9 @@ tacticalrmm-theme/
 │   ├── shared/
 │   ├── dracula/
 │   ├── classic/
-│   ├── nothing/
 │   ├── cyber/
-│   ├── vision/
 │   ├── swiss/
-│   ├── terminal/
-│   └── neo/
+│   └── terminal/
 ├── patches/                   # 14 frontend patches
 ├── patches-backend/           # Django patches + ui_theme migration
 ├── frontend-src/              # Utility sources (reference)
